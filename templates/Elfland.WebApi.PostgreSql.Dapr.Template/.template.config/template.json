@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Kamasylvia",
+  "classifications": [ "WebApi", "PostgreSQL", "Dapr" ],
+  "identity": "Elfland.WebApi.PostgreSql.Dapr.Template",
+  "name": "Elfland templates: WebAPI with PostgreSQL and Dapr",
+  "shortName": "webapi-pg-dapr",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  }
+}
