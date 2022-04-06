@@ -202,14 +202,10 @@
       "replaces": "5001"
     },
     "RequiresHttps": {
-      "type": "computed",
-      "value": "(OrganizationalAuth || IndividualAuth || !NoHttps)"
-    },
-    "NoHttps": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false",
-      "description": "Whether to turn off HTTPS. This option only applies if Individual, IndividualB2C, SingleOrg, or MultiOrg aren't used for --auth."
+      "description": "Whether to turn on HTTPS."
     },
     "git": {
       "type": "parameter",

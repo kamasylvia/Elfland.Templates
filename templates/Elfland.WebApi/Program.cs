@@ -95,7 +95,9 @@ try
         app.UseSwaggerUI();
     }
 
+#if(RequiresHttps)
     app.UseHttpsRedirection();
+#endif
 
 #if (authentication || authorizationAuthentication)
     app.UseAuthentication();
