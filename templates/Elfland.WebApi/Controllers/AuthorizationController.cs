@@ -12,13 +12,15 @@ public class AuthorizationController : ControllerBase
 {
     private readonly IOpenIddictApplicationManager _applicationManager;
 
-    public AuthorizationController(IOpenIddictApplicationManager applicationManager)
-        => _applicationManager = applicationManager;
+    public AuthorizationController(IOpenIddictApplicationManager applicationManager) =>
+        _applicationManager = applicationManager;
 
     [HttpPost("~/connect/token"), Produces("application/json")]
     public async Task<IActionResult> Exchange()
     {
-        var request = HttpContext.GetOpenIddictServerRequest() ?? throw new ArgumentNullException("The request is null.");
+        var request =
+            HttpContext.GetOpenIddictServerRequest()
+            ?? throw new ArgumentNullException("The request is null.");
 
         if (!request.IsClientCredentialsGrantType())
         {
@@ -28,27 +30,36 @@ public class AuthorizationController : ControllerBase
         // Note: the client credentials are automatically validated by OpenIddict:
         // if client_id or client_secret are invalid, this action won't be invoked.
 
-        var application = await _applicationManager.FindByClientIdAsync(request.ClientId!) ??
-            throw new InvalidOperationException("The application cannot be found.");
+        var application =
+            await _applicationManager.FindByClientIdAsync(request.ClientId!)
+            ?? throw new InvalidOperationException("The application cannot be found.");
 
         // Create a new ClaimsIdentity containing the claims that
         // will be used to create an id_token, a token or a code.
-        var identity = new ClaimsIdentity(TokenValidationParameters.DefaultAuthenticationType, Claims.Name, Claims.Role);
+        var identity = new ClaimsIdentity(
+            TokenValidationParameters.DefaultAuthenticationType,
+            Claims.Name,
+            Claims.Role
+        );
 
         // Use the client_id as the subject identifier.
-        identity.AddClaim(Claims.Subject,
+        identity.AddClaim(
+            Claims.Subject,
             (await _applicationManager.GetClientIdAsync(application))!,
-            Destinations.AccessToken, Destinations.IdentityToken);
+            Destinations.AccessToken,
+            Destinations.IdentityToken
+        );
 
-        identity.AddClaim(Claims.Name,
+        identity.AddClaim(
+            Claims.Name,
             (await _applicationManager.GetDisplayNameAsync(application))!,
-            Destinations.AccessToken, Destinations.IdentityToken);
+            Destinations.AccessToken,
+            Destinations.IdentityToken
+        );
 
         var claimsPrincipal = new ClaimsPrincipal(identity);
         claimsPrincipal.SetScopes(request.GetScopes());
 
-        return SignIn(
-            claimsPrincipal,
-            OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+        return SignIn(claimsPrincipal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
     }
 }
