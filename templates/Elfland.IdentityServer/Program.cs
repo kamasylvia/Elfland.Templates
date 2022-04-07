@@ -1,5 +1,5 @@
-using Elfland.WebApi.Data;
-using Elfland.WebApi.Data.Initializers;
+using Elfland.IdentityServer.Data;
+using Elfland.IdentityServer.Data.Initializers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -56,6 +56,10 @@ try
             var serverVersion = MySqlServerVersion.AutoDetect(connectionString);
             options.UseMySql(connectionString, serverVersion);
 #endif
+
+            // Register the entity sets needed by OpenIddict.
+            // Note: use the generic overload if you need to replace the default OpenIddict entities.
+            options.UseOpenIddict();
         }
     );
 
@@ -91,7 +95,9 @@ try
     app.UseHttpsRedirection();
 #endif
 
-#if (auth)
+    app.UseAuthentication();
+
+#if (authorization)
     app.UseAuthorization();
 #endif
 

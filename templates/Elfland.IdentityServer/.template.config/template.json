@@ -3,16 +3,20 @@
   "author": "Kamasylvia",
   "generatorVersions": "[1.0.0.0-*)",
   "classifications": [
-    "WebAPI"
+    "WebAPI",
+    "IdentityServer",
+    "OpenIddict"
   ],
-  "identity": "Elfland.WebApi",
-  "name": "Elfland templates: WebAPI",
-  "shortName": "elfwebapi",
-  "sourceName": "Elfland.WebApi",
+  "identity": "Elfland.IdentityServer",
+  "name": "Create a OpenID connect server with OpenIddict.",
+  "shortName": "elfis",
+  "sourceName": "Elfland.IdentityServer",
   "tags": {
     "language": "C#",
     "type": "project"
   },
+  "sources": [
+  ],
   "symbols": {
     "db": {
       "type": "parameter",
@@ -60,11 +64,11 @@
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
     },
-    "auth": {
+    "authorization": {
       "type": "parameter",
       "datatype": "bool",
       "description": "Add authorization middleware.",
-      "defaultValue": "true"
+      "defaultValue": "false"
     },
     "kestrelHttpPort": {
       "type": "parameter",

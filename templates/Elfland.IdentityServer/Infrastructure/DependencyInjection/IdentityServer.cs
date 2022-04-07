@@ -1,5 +1,5 @@
-using Elfland.WebApi.Application.Configurations.OpenIddict;
-using Elfland.WebApi.Data;
+using Elfland.IdentityServer.Application.Configurations.OpenIddict;
+using Elfland.IdentityServer.Data;
 using OpenIddict.Abstractions;
 
 namespace Elfland.WebApi.Infrastructure.DependencyInjection;

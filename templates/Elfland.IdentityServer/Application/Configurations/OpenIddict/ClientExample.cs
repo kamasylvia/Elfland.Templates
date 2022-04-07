@@ -1,8 +1,8 @@
-using Elfland.WebApi.Data;
+using Elfland.IdentityServer.Data;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace Elfland.WebApi.Application.Configurations.OpenIddict;
+namespace Elfland.IdentityServer.Application.Configurations.OpenIddict;
 
 public class ClientExample : IHostedService
 {
