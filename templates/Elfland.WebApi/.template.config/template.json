@@ -60,6 +60,12 @@
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
     },
+    "skipInstallEntityFrameworkCore" : {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic install of the Entity Framework Core NuGet package.",
+      "defaultValue": "false"
+    },
     "auth": {
       "type": "parameter",
       "datatype": "bool",
@@ -171,6 +177,22 @@
       "args": {
         "executable": "dotnet",
         "args": "new gitignore"
+      },
+      "continueOnError": false
+    },
+    {
+      "id": "installEntityFrameworkCore",
+      "condition": "(!skipInstallEntityFrameworkCore)",
+      "description": "Create database and seed data.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet tool install --global dotnet-ef'"
+        }
+      ],
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "dotnet",
+        "args": "tool install --global dotnet-ef"
       },
       "continueOnError": false
     }
