@@ -77,7 +77,7 @@ try
     // Seed data
     try
     {
-        await app.Services.SeedDataAsync(builder.Configuration, builder.Environment);
+        await app.Services.InitializeDatabaseAsync();
     }
     catch (System.Exception ex)
     {

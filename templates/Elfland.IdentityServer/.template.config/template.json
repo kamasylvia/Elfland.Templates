@@ -15,8 +15,7 @@
     "language": "C#",
     "type": "project"
   },
-  "sources": [
-  ],
+  "sources": [],
   "symbols": {
     "db": {
       "type": "parameter",
@@ -125,14 +124,26 @@
       "datatype": "bool",
       "description": "If specified, initialize the project as a git repo on create.",
       "defaultValue": "false"
+    },
+    "ef": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, automatic install the Entity Framework Core NuGet package.",
+      "defaultValue": "false"
+    },
+    "formatter": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, automatic install the CSharpier NuGet package.",
+      "defaultValue": "false"
     }
   },
   "primaryOutputs": [
     {
-      "path": "Elfland.WebApi.csproj"
+      "path": "Elfland.IdentityServer.csproj"
     }
   ],
-  "defaultName": "Elfland.WebApi",
+  "defaultName": "Elfland.IdentityServer",
   "postActions": [
     {
       "id": "restore",
@@ -163,20 +174,52 @@
       "continueOnError": false
     },
     {
-      "id": "gitignore",
-      "condition": "(git)",
-      "description": "Create .gitignore file",
+      "id": "installEntityFrameworkCore",
+      "condition": "(ef)",
+      "description": "Install dotnet-ef.",
       "manualInstructions": [
         {
-          "text": "Run 'dotnet new gitignore'"
+          "text": "Run 'dotnet tool install --global dotnet-ef'"
         }
       ],
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
       "args": {
         "executable": "dotnet",
-        "args": "new gitignore"
+        "args": "tool install --global dotnet-ef"
       },
-      "continueOnError": false
+      "continueOnError": true
+    },
+    {
+      "id": "installCodeFormatter",
+      "condition": "(formatter)",
+      "description": "Install CSharpier as code formatter.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet tool install --global csharpier'"
+        }
+      ],
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "dotnet",
+        "args": "tool install --global csharpier"
+      },
+      "continueOnError": true
+    },
+    {
+      "id": "autoFormat",
+      "condition": "(formatter)",
+      "description": "Auto format code with CSharpier after creating the project.",
+      "manualInstructions": [
+        {
+          "text": "Run 'dotnet csharpier .'"
+        }
+      ],
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "dotnet",
+        "args": "csharpier ."
+      },
+      "continueOnError": true
     }
   ]
 }

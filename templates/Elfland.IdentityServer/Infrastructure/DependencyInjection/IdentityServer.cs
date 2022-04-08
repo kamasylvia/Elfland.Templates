@@ -1,8 +1,10 @@
 using Elfland.IdentityServer.Application.Configurations.OpenIddict;
 using Elfland.IdentityServer.Data;
+using Elfland.IdentityServer.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using OpenIddict.Abstractions;
 
-namespace Elfland.WebApi.Infrastructure.DependencyInjection;
+namespace Elfland.IdentityServer.Infrastructure.DependencyInjection;
 
 public static partial class ServiceCollectionDependencyInjection
 {
@@ -11,6 +13,11 @@ public static partial class ServiceCollectionDependencyInjection
         IConfiguration configuration
     )
     {
+        services
+            .AddIdentity<ApplicationUser, ApplicationRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
         services
             .AddOpenIddict()
             // Register the OpenIddict core components.
