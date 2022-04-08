@@ -33,5 +33,4 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class
     public virtual async Task<bool> SaveAsync() => await _context.SaveChangesAsync() >= 0;
 
     public virtual void Update(T item) => _context.Set<T>().Update(item);
-
 }

@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Elfland.WebApi.Controllers;
 
 [ApiController]
@@ -5,16 +9,8 @@ namespace Elfland.WebApi.Controllers;
 public class AccountController : ControllerBase
 {
     [Authorize]
-    public ActionResult Login()
-    {
-    }
+    public ActionResult Login() { return Ok(); }
 
-    [Authorize(
-    AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-    Roles = "admin"
-)]
-
-    public ActionResult Logout()
-    {
-    }
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    public ActionResult Logout() { return Ok(); }
 }
