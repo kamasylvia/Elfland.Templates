@@ -97,9 +97,7 @@ try
 
     app.UseAuthentication();
 
-#if (authorization)
     app.UseAuthorization();
-#endif
 
     app.MapControllers();
 
