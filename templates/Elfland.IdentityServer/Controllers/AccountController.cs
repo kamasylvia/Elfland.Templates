@@ -17,7 +17,8 @@ public class AccountController : Controller
 
     public AccountController(
         UserManager<ApplicationUser> userManager,
-        ApplicationDbContext applicationDbContext)
+        ApplicationDbContext applicationDbContext
+    )
     {
         _userManager = userManager;
         _applicationDbContext = applicationDbContext;
@@ -35,7 +36,10 @@ public class AccountController : Controller
             return StatusCode(StatusCodes.Status409Conflict);
         }
 
-        var result = await _userManager.CreateAsync(new ApplicationUser { UserName = request.Username }, request.Password);
+        var result = await _userManager.CreateAsync(
+            new ApplicationUser { UserName = request.Username },
+            request.Password
+        );
         if (result.Succeeded)
         {
             return Ok();

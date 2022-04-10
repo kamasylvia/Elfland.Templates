@@ -10,9 +10,18 @@ using MediatR;
 namespace Elfland.Dapr.Application.Queries.WeatherForecastQueries;
 
 public class GetWeatherForecastQueryHandler
-    : IRequestHandler<GetWeatherForecastRequest, IEnumerable<GetWeatherForecastResponse>>
+    : IRequestHandler<
+#if (grpc && !clientMode)
+        GetWeatherForecastGrpcRequest,
+#else
+        GetWeatherForecastRequest,
+#endif
+        IEnumerable<GetWeatherForecastResponse>
+    >
 {
-#if (!actor)
+#if (actors)
+    private readonly IActorProxyFactory _actorProxyFactory;
+#else
     private static readonly string[] Summaries = new[]
     {
         "Freezing",
@@ -26,8 +35,6 @@ public class GetWeatherForecastQueryHandler
         "Sweltering",
         "Scorching"
     };
-#else
-    private readonly IActorProxyFactory _actorProxyFactory;
 #endif
     private readonly IMapper _mapper;
 
@@ -46,11 +53,26 @@ public class GetWeatherForecastQueryHandler
     }
 
     public Task<IEnumerable<GetWeatherForecastResponse>> Handle(
+#if (grpc && !clientMode)
+        GetWeatherForecastGrpcRequest grpcRequest,
+#else
         GetWeatherForecastRequest request,
+#endif
         CancellationToken cancellationToken
     )
     {
-#if (!actors)
+#if (grpc && !clientMode)
+    var request = grpcRequest.Request;
+#endif
+
+#if (actors)
+        return _actorProxyFactory
+            .CreateActorProxy<IWeatherForecastActor>(
+                ActorId.CreateRandom(),
+                nameof(WeatherForecastActor)
+            )
+            .GetWeatherForecastAsync(request);
+#else
         var weatherForecasts = Enumerable
             .Range(1, 5)
             .Select(
@@ -65,13 +87,6 @@ public class GetWeatherForecastQueryHandler
             .ToArray();
         var response = _mapper.Map<IEnumerable<GetWeatherForecastResponse>>(weatherForecasts);
         return Task.FromResult(response);
-#else
-        return _actorProxyFactory
-            .CreateActorProxy<IWeatherForecastActor>(
-                ActorId.CreateRandom(),
-                nameof(WeatherForecastActor)
-            )
-            .GetWeatherForecastAsync(request);
 #endif
     }
 }

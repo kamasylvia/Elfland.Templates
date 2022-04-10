@@ -22,6 +22,12 @@
             "Application/Actors/",
             "Infrastructure/DependencyInjection/Actors.cs"
           ]
+        },
+        {
+          "condition": "(!grpc) && (clientMode)",
+          "exclude": [
+            "Services/GrpcService.cs"
+          ]
         }
       ]
     }

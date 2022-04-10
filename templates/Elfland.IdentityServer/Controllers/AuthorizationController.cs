@@ -17,7 +17,8 @@ public class AuthorizationController : ControllerBase
 
     public AuthorizationController(
         SignInManager<ApplicationUser> signInManager,
-        UserManager<ApplicationUser> userManager)
+        UserManager<ApplicationUser> userManager
+    )
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -26,32 +27,44 @@ public class AuthorizationController : ControllerBase
     [HttpPost("~/connect/token"), Produces("application/json")]
     public async Task<IActionResult> Exchange()
     {
-        var request = HttpContext.GetOpenIddictServerRequest() ?? throw new ArgumentNullException("The request is null.");
+        var request =
+            HttpContext.GetOpenIddictServerRequest()
+            ?? throw new ArgumentNullException("The request is null.");
         if (request.IsPasswordGrantType())
         {
             var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null)
             {
-                var properties = new AuthenticationProperties(new Dictionary<string, string?>
-                {
-                    [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
-                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                        "The username/password couple is invalid."
-                });
+                var properties = new AuthenticationProperties(
+                    new Dictionary<string, string?>
+                    {
+                        [OpenIddictServerAspNetCoreConstants.Properties.Error] =
+                            Errors.InvalidGrant,
+                        [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
+                            "The username/password couple is invalid."
+                    }
+                );
 
                 return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
             }
 
             // Validate the username/password parameters and ensure the account is not locked out.
-            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: true);
+            var result = await _signInManager.CheckPasswordSignInAsync(
+                user,
+                request.Password,
+                lockoutOnFailure: true
+            );
             if (!result.Succeeded)
             {
-                var properties = new AuthenticationProperties(new Dictionary<string, string?>
-                {
-                    [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
-                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
-                        "The username/password couple is invalid."
-                });
+                var properties = new AuthenticationProperties(
+                    new Dictionary<string, string?>
+                    {
+                        [OpenIddictServerAspNetCoreConstants.Properties.Error] =
+                            Errors.InvalidGrant,
+                        [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] =
+                            "The username/password couple is invalid."
+                    }
+                );
 
                 return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
             }
@@ -61,13 +74,11 @@ public class AuthorizationController : ControllerBase
             var principal = await _signInManager.CreateUserPrincipalAsync(user);
 
             // Set the list of scopes granted to the client application.
-            principal.SetScopes(new[]
-            {
-                Scopes.OpenId,
-                Scopes.Email,
-                Scopes.Profile,
-                Scopes.Roles
-            }.Intersect(request.GetScopes()));
+            principal.SetScopes(
+                new[] { Scopes.OpenId, Scopes.Email, Scopes.Profile, Scopes.Roles }.Intersect(
+                    request.GetScopes()
+                )
+            );
 
             foreach (var claim in principal.Claims)
             {
@@ -113,7 +124,8 @@ public class AuthorizationController : ControllerBase
                 yield break;
 
             // Never include the security stamp in the access and identity tokens, as it's a secret value.
-            case "AspNet.Identity.SecurityStamp": yield break;
+            case "AspNet.Identity.SecurityStamp":
+                yield break;
 
             default:
                 yield return Destinations.AccessToken;

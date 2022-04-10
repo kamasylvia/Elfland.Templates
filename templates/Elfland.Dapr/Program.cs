@@ -1,5 +1,8 @@
 using Elfland.Dapr.Data;
 using Elfland.Dapr.Data.Initializers;
+#if (!clientMode)
+using Elfland.Dapr.Services;
+#endif
 #if (actors)
 using Elfland.Dapr.Infrastructure.DependencyInjection;
 #endif
@@ -79,6 +82,9 @@ try
     builder.Services.AddAppActors();
 #endif
 
+#if (grpc && !clientMode)
+    builder.Services.AddGrpc();
+#endif
 
     var app = builder.Build();
 
@@ -108,6 +114,10 @@ try
 #endif
 
     app.MapControllers();
+
+#if (grpc && !clientMode)
+    app.MapGrpcService<GrpcService>();
+#endif
 
 #if (actors)
     app.MapActorsHandlers();
