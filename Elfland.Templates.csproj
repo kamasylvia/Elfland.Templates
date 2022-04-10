@@ -5,7 +5,7 @@
     <PackageVersion>1.0</PackageVersion>
     <PackageId>Elfland.Templates</PackageId>
     <Title>Elfland Templates</Title>
-    <Authors>Me</Authors>
+    <Authors>Kamasylvia</Authors>
     <Description>Templates to use when creating an application for Elfland.</Description>
     <PackageTags>dotnet-new;templates;elfland</PackageTags>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;templates\**\Logs\**;templates\**\.vscode\**;" />
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;templates\**\Logs\**;templates\**\.vscode\**;templates\Elfland.IdentityServer\**;" />
     <Compile Remove="**\*" />
   </ItemGroup>
 
