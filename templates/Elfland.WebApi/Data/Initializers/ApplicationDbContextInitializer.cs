@@ -6,9 +6,7 @@ namespace Elfland.WebApi.Data.Initializers;
 
 public static class ApplicationDbContextInitializer
 {
-    public static async Task InitializeDatabaseAsync(
-        this IServiceProvider serviceProvider
-    )
+    public static async Task InitializeDatabaseAsync(this IServiceProvider serviceProvider)
     {
         using var serviceScope = serviceProvider.CreateScope();
         var environment = serviceScope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
@@ -28,7 +26,7 @@ public static class ApplicationDbContextInitializer
         }
 
         // Check database
-        if (context?.EntityExamples?.Any() ?? true)
+        if (context?.WeatherForecasts?.Any() ?? true)
         {
             return; // Database does not exist or already been seeded.
         }
@@ -36,18 +34,18 @@ public static class ApplicationDbContextInitializer
         await SeedDataAsync(context);
     }
 
-    private static async Task SeedDataAsync(
-        this ApplicationDbContext context
-    )
+    private static async Task SeedDataAsync(this ApplicationDbContext context)
     {
         // Add special data
-        var entityExample = new EntityExample
+        var weatherForecast = new WeatherForecast
         {
             Id = NewId.Next(),
-            Name = "Seeded Entity Example"
+            Date = DateTime.Now,
+            TemperatureC = -10,
+            Summary = "Seed data"
         };
 
-        await context.EntityExamples!.AddAsync(entityExample);
+        await context.WeatherForecasts!.AddAsync(weatherForecast);
         await context.SaveChangesAsync();
     }
 }

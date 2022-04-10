@@ -2,6 +2,8 @@ namespace Elfland.WebApi.Data.Entities;
 
 public class WeatherForecast
 {
+    [Key]
+    public NewId Id { get; set; }
     public DateTime Date { get; set; }
 
     public int TemperatureC { get; set; }

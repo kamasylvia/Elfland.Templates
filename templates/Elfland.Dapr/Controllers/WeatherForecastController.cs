@@ -10,7 +10,7 @@ public class WeatherForecastController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public WeatherForecastController(IMediator mediator, ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(IMediator mediator)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }

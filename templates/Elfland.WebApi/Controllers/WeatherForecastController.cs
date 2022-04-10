@@ -8,27 +8,11 @@ namespace Elfland.WebApi.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing",
-        "Bracing",
-        "Chilly",
-        "Cool",
-        "Mild",
-        "Warm",
-        "Balmy",
-        "Hot",
-        "Sweltering",
-        "Scorching"
-    };
-
-    private readonly ILogger<WeatherForecastController> _logger;
     private readonly IMediator _mediator;
 
-    public WeatherForecastController(IMediator mediator, ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(IMediator mediator)
     {
-        _mediator = mediator;
-        _logger = logger;
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
     [HttpGet(Name = "GetWeatherForecast")]

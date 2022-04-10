@@ -2,7 +2,7 @@ using AutoMapper;
 using Elfland.WebApi.Data.Entities;
 using MediatR;
 
-namespace Elfland.Dapr.Application.Queries.WeatherForecastQueries;
+namespace Elfland.WebApi.Application.Queries.WeatherForecastQueries;
 
 public class GetWeatherForecastQueryHandler
     : IRequestHandler<GetWeatherForecastRequest, IEnumerable<GetWeatherForecastResponse>>

@@ -9,7 +9,7 @@ public class ApplicationDbContext : DbContext
     private readonly IConfiguration _configuration;
 
     // Entity sets
-    public virtual DbSet<EntityExample>? EntityExamples { get; set; }
+    public virtual DbSet<WeatherForecast>? WeatherForecasts { get; set; }
 
     public ApplicationDbContext(DbContextOptions options, IConfiguration configuration)
         : base(options)
@@ -33,9 +33,9 @@ public class ApplicationDbContext : DbContext
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
 
-        builder.Entity<EntityExample>().Property<NewId>(entity => entity.Id).HasConversion(
-            newId => newId.ToString(),
-            stringId => new NewId(stringId)
-        );
+        builder
+            .Entity<WeatherForecast>()
+            .Property<NewId>(entity => entity.Id)
+            .HasConversion(newId => newId.ToString(), stringId => new NewId(stringId));
     }
 }
