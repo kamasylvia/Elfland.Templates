@@ -1,6 +1,7 @@
 using Elfland.Dapr.Data;
 using Elfland.Dapr.Data.Initializers;
-#if (!clientMode)
+using Elfland.Dapr.Infrastructure.Extensions;
+#if (grpc && !clientMode)
 using Elfland.Dapr.Services;
 #endif
 #if (actors)
@@ -76,10 +77,12 @@ try
     builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
     // AutoMapper
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    // Add custom dependencies
+    builder.Services.AddDependencies();
 
 #if (actors)
     // Add Actors
-    builder.Services.AddAppActors();
+    builder.Services.AddDaprActors();
 #endif
 
 #if (grpc && !clientMode)
