@@ -54,6 +54,34 @@
       "type": "computed",
       "value": "(db == \"sqlite\")"
     },
+    "syslog": {
+      "type": "parameter",
+      "datatype": "choice",
+      "description": "Choose a system logger.",
+      "defaultValue": "exceptionless",
+      "choices": [
+        {
+          "choice": "seq",
+          "description": "Seq"
+        },
+        {
+          "choice": "exceptionless",
+          "description": "Exceptionless"
+        },
+        {
+          "choice": "none",
+          "description": "Do not use any system logger."
+        }
+      ]
+    },
+    "seq": {
+      "type": "computed",
+      "value": "(syslog == \"seq\")"
+    },
+    "exceptionless": {
+      "type": "computed",
+      "value": "(syslog == \"exceptionless\")"
+    },
     "auth": {
       "type": "parameter",
       "datatype": "bool",
@@ -122,13 +150,13 @@
       "description": "Whether to initialize the project as a git repo on create.",
       "defaultValue": "false"
     },
-    "ef" : {
+    "ef": {
       "type": "parameter",
       "datatype": "bool",
       "description": "If specified, automatic install the Entity Framework Core NuGet package.",
       "defaultValue": "false"
     },
-    "formatter" : {
+    "formatter": {
       "type": "parameter",
       "datatype": "bool",
       "description": "If specified, automatic install the CSharpier NuGet package.",

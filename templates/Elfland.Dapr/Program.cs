@@ -94,7 +94,11 @@ try
     // Seed data
     try
     {
-        await app.Services.InitializeDatabaseAsync();
+        if (args.Length == 1 && (args[0].ToLower().Contains("seed")
+            || args[0].ToLower().Contains("init")))
+        {
+            await app.Services.InitializeDatabaseAsync();
+        }
     }
     catch (System.Exception ex)
     {

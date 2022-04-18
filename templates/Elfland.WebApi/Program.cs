@@ -1,8 +1,11 @@
+using Elfland.Lake.Extensions;
 using Elfland.WebApi.Data;
 using Elfland.WebApi.Data.Initializers;
+using Elfland.WebApi.Infrastructure.Filters;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
+
+
 
 // Serilog
 IConfiguration _configuration = new ConfigurationBuilder()
@@ -27,15 +30,20 @@ try
 {
     Log.Information("Starting web host");
 
-    // StartUp
     var builder = WebApplication.CreateBuilder(args);
+
+    // StartUp
     builder.Host.UseSerilog(
         (hostingContext, loggerConfig) =>
             loggerConfig.ReadFrom.Configuration(hostingContext.Configuration)
     );
 
     // Add services to the container.
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(
+        options => {
+            options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
+        }
+    );
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -48,9 +56,9 @@ try
 #if (postgres)
             options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"));
 #elif (mssql)
-            options.UseSqlServer(Configuration.GetConnectionString("MsSQL"))
+            options.UseSqlServer(builder.Configuration.GetConnectionString("MsSQL"))
 #elif (SQLite)
-            options.UseSqlite(Configuration.GetConnectionString("SQLite"));
+            options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
 #elif (mysql)
             var connectionString = builder.Configuration.GetConnectionString("MySQL");
             var serverVersion = MySqlServerVersion.AutoDetect(connectionString);
@@ -66,6 +74,8 @@ try
     builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
     // AutoMapper
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    // Add custom dependencies
+    builder.Services.AddDependencies();
 
 
     var app = builder.Build();
@@ -73,7 +83,11 @@ try
     // Seed data
     try
     {
-        await app.Services.InitializeDatabaseAsync();
+        if (args.Length == 1 && (args[0].ToLower().Contains("seed")
+            || args[0].ToLower().Contains("init")))
+        {
+            await app.Services.InitializeDatabaseAsync();
+        }
     }
     catch (System.Exception ex)
     {

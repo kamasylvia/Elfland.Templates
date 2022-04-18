@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;templates\**\Logs\**;templates\**\.vscode\**;templates\Elfland.IdentityServer\**;" />
+    <Content Include="templates\**\*" Exclude="**\.DS_Store;templates\**\bin\**;templates\**\obj\**;templates\**\Logs\**;templates\**\.vscode\**;templates\Elfland.IdentityServer\**;" />
     <Compile Remove="**\*" />
   </ItemGroup>
 

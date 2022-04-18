@@ -10,10 +10,9 @@ public static class ApplicationDbContextInitializer
     {
         using var serviceScope = serviceProvider.CreateScope();
         var environment = serviceScope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
-        var configuration = serviceScope.ServiceProvider.GetRequiredService<IConfiguration>();
         var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        if (Convert.ToBoolean(configuration["RefreshDbEveryTime"]))
+        if (environment.IsDevelopment())
         {
             var deleted = context.Database.EnsureDeleted();
             System.Console.WriteLine($"The old database is deleted: {deleted}");
@@ -40,7 +39,7 @@ public static class ApplicationDbContextInitializer
         var weatherForecast = new WeatherForecast
         {
             Id = NewId.Next(),
-            Date = DateTime.Now,
+            Date = DateTime.UtcNow, // There is a bug of local time in the current version of PostgreSQL .
             TemperatureC = -10,
             Summary = "Seed data"
         };

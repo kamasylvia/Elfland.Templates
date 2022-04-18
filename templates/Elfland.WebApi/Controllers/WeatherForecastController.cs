@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Elfland.WebApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -15,7 +15,7 @@ public class WeatherForecastController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
+    [HttpGet]
     public async Task<IEnumerable<GetWeatherForecastResponse>> Get() =>
         await _mediator.Send(new GetWeatherForecastRequest());
 }

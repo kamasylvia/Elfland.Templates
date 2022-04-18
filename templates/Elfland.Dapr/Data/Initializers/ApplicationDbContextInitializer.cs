@@ -10,10 +10,9 @@ public static class ApplicationDbContextInitializer
     {
         using var serviceScope = serviceProvider.CreateScope();
         var environment = serviceScope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
-        var configuration = serviceScope.ServiceProvider.GetRequiredService<IConfiguration>();
         var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        if (Convert.ToBoolean(configuration["RefreshDbEveryTime"]))
+        if (environment.IsDevelopment())
         {
             var deleted = context.Database.EnsureDeleted();
             System.Console.WriteLine($"The old database is deleted: {deleted}");
