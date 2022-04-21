@@ -2,7 +2,7 @@
 
 namespace Elfland.Dapr.Infrastructure.Exceptions;
 
-public class RemoteServiceException : LogRequiredException
+public class RemoteServiceException : HttpExceptionBase
 {
     public override int? StateCode { get; set; } = StatusCodes.Status503ServiceUnavailable;
 

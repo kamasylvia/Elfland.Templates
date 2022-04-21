@@ -41,6 +41,10 @@ try
         app.UseSwaggerUI();
     }
 
+#if(https)
+    app.UseHttpsRedirection();
+#endif
+
 #if (auth)
     app.UseAuthorization();
 #endif

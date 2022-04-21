@@ -2,7 +2,7 @@
 
 namespace Elfland.Dapr.Infrastructure.Exceptions;
 
-public class NotFoundException : LogUnneededException
+public class NotFoundException : LogIgnoreException
 {
     public override int? StateCode { get; set; } = StatusCodes.Status404NotFound;
 
