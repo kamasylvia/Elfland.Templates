@@ -2,7 +2,7 @@
 
 namespace Elfland.Dapr.Infrastructure.Exceptions;
 
-public class ConflictException : HttpExceptionBase
+public class ConflictException : LogUnneededException
 {
     public override int? StateCode { get; set; } = StatusCodes.Status409Conflict;
 

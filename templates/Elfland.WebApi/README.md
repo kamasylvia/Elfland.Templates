@@ -1,9 +1,23 @@
 # Introduction
 This project is created from Elfland.WebAPI template.
 
-# How to start
+# Prerequisite
+1. [.NET SDK](https://dotnet.microsoft.com/en-us/download)
+2. [Docker](https://www.docker.com/get-started/)
+3. [Install Dapr CLI](https://docs.dapr.io/getting-started/install-dapr-cli/)
+4. One of the following database provider:
+   1. [PostgreSQL](https://hub.docker.com/_/postgres/)
+   1. [MySQL](https://hub.docker.com/_/mysql/)
+   2. Microsoft SQL Server
+   3. SQLite
+5. One of the following system logger.
+   1. [Expressionless](https://exceptionless.com/docs/self-hosting/docker/)
+   2. [Seq](https://docs.datalust.co/docs/getting-started-with-docker)
+
+# Usage
+## How to start
 1. Install and run your database provider
-    - Note: For PostgreSQL, the db name `POSTGRES_DB` can't be `postgres` EF Core is applied.
+    - Note: For PostgreSQL, the db name `POSTGRES_DB` can't be `postgres` if EF Core is applied.
       - [DataContext.Database.EnsureDeleted() results in "terminating connection due to administrator command" · Issue #1926 · npgsql/efcore.pg](https://github.com/npgsql/efcore.pg/issues/1926#issuecomment-887031894)
 
 ```sh
@@ -21,7 +35,7 @@ $ docker run -d \
     postgres:alpine
 ```
 
-2. Install and run Exceptionless if specified. (default enabled)
+2. Install and run the system logger. (default exceptionless)
 ```sh
 $ docker run --rm -it \
     --name=Exceptionless \
@@ -31,7 +45,7 @@ $ docker run --rm -it \
 
 // With data persisted
 $ docker run --rm -it -p 10000:80 \
-    -v ${PWD}/Exceptionless/data:/usr/share/elasticsearch/data \
+    -v ${PWD}/Syslog/data:/usr/share/elasticsearch/data \
     exceptionless/exceptionless:latest
 ```
 
@@ -66,7 +80,7 @@ $ docker run seed
 
 If failed to connect database, delete `Database` folder (not `Data` folder) then restart your database docker container.
 
-# Options
+## Options
 ```sh
 $ dotnet new elfapi -o <project_root_path> [options]
 ```
@@ -78,9 +92,9 @@ $ dotnet new elfapi -o <project_root_path> [options]
 | `--git`       | Whether to initialize the project as a git repo on create. | bool                                   | `false`         |
 | `--ef`        | Whether to install `dotnet-ef`.                            | bool                                   | `false`         |
 | `--formatter` | Whether to install the code formatter `csharpier`.         | bool                                   | `false`         |
-| `--syslog`    | Whether to use Exceptionless.                              | `seq`, `exceptionless`, `none`         | `exceptionless` |
+| `--syslog`    | Choose a system logger for the project.                    | `seq`, `exceptionless`, `none`         | `exceptionless` |
 
-# Arguments
+## Arguments
 ```sh
 $ dotnet run <args>
 ```

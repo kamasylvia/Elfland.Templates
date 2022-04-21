@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.7.0" Condition="'$(actors)' == 'True'" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.7.0" />
     <PackageReference Include="Elfland.Forest" Version="20220405.2.0" />
     <PackageReference Include="Elfland.Lake" Version="20220413.1.0" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.44.0" Condition="'$(clientMode)' == 'False'" />
+    <PackageReference Include="Elfland.Ocean" Version="20220419.2.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.44.0" Condition="'$(grpc)' == 'True'" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">

@@ -2,7 +2,10 @@ using MediatR;
 
 namespace Elfland.WebApi.Application.Queries.WeatherForecastQueries;
 
-public record GetWeatherForecastRequest : IRequest<IEnumerable<GetWeatherForecastResponse>> { }
+public record GetWeatherForecastRequest : IRequest<IEnumerable<GetWeatherForecastResponse>>
+{
+    public string? Message { get; set; }
+}
 
 public record GetWeatherForecastResponse
 {

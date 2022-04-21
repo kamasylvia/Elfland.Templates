@@ -1,11 +1,10 @@
 using Elfland.Dapr.Data;
 using Elfland.Dapr.Data.Initializers;
-using Elfland.Dapr.Infrastructure.Extensions;
+using Elfland.Lake.Extensions;
+using Elfland.Ocean.Actors.Extensions;
+using Elfland.WebApi.Infrastructure.Filters;
 #if (grpc && !clientMode)
 using Elfland.Dapr.Services;
-#endif
-#if (actors)
-using Elfland.Dapr.Infrastructure.DependencyInjection;
 #endif
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -42,10 +41,14 @@ try
     );
 
     // Add services to the container.
-#if (!serverMode)
-    builder.Services.AddControllers().AddDapr();
-#else
-    builder.Services.AddControllers();
+#if (!grpcServer)
+    builder.Services.AddControllers(
+        options =>
+        {
+            options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
+        }
+    )
+    .AddDapr();
 #endif
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -79,11 +82,8 @@ try
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     // Add custom dependencies
     builder.Services.AddDependencies();
-
-#if (actors)
     // Add Actors
     builder.Services.AddDaprActors();
-#endif
 
 #if (grpc && !clientMode)
     builder.Services.AddGrpc();

@@ -2,7 +2,7 @@
 
 namespace Elfland.Dapr.Infrastructure.Exceptions;
 
-public class DatabaseUpdateException : HttpExceptionBase
+public class DatabaseUpdateException : LogRequiredException
 {
     public override int? StateCode { get; set; } = StatusCodes.Status500InternalServerError;
 

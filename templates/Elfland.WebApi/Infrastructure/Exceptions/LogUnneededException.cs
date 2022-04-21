@@ -2,11 +2,11 @@ using System.Runtime.Serialization;
 
 namespace Elfland.WebApi.Infrastructure.Exceptions;
 
-public abstract class LogUnneededException : HttpExceptionBase
+public abstract class LogIgnoreException : HttpExceptionBase
 {
-    protected LogUnneededException() { }
+    protected LogIgnoreException() { }
 
-    protected LogUnneededException(string message) : base(message) { }
+    protected LogIgnoreException(string message) : base(message) { }
 
-    protected LogUnneededException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    protected LogIgnoreException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

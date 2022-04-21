@@ -3,137 +3,45 @@
   "author": "Kamasylvia",
   "generatorVersions": "[1.0.0.0-*)",
   "classifications": [
-    "Dapr"
+    "Reverse proxy",
+    "YARP"
   ],
-  "identity": "Elfland.Dapr",
-  "name": "Elfland templates: Dapr client and server.",
-  "shortName": "elfdapr",
-  "sourceName": "Elfland.Dapr",
+  "identity": "Elfland.Yarp",
+  "name": "Elfland templates: YARP",
+  "shortName": "elfyarp",
+  "sourceName": "Elfland.Yarp",
   "tags": {
     "language": "C#",
     "type": "project"
   },
-  "sources": [
-    {
-      "modifiers": [
-        {
-          "condition": "(!actors)",
-          "exclude": [
-            "Application/Actors/",
-            "Infrastructure/DependencyInjection/Actors.cs"
-          ]
-        },
-        {
-          "condition": "(!grpc) && (clientMode)",
-          "exclude": [
-            "Services/GrpcService.cs"
-          ]
-        },
-        {
-          "condition": "(!grpc)",
-          "exclude": [
-            "Protos/"
-          ]
-        }
-      ]
-    }
-  ],
   "symbols": {
-    "db": {
+    "syslog": {
       "type": "parameter",
       "datatype": "choice",
-      "description": "Choose a database provider for the project.",
-      "defaultValue": "postgres",
+      "description": "Choose a system logger.",
+      "defaultValue": "exceptionless",
       "choices": [
         {
-          "choice": "mssql",
-          "description": "MS SQL Server"
+          "choice": "seq",
+          "description": "Seq"
         },
         {
-          "choice": "mysql",
-          "description": "MySQL"
+          "choice": "exceptionless",
+          "description": "Exceptionless"
         },
         {
-          "choice": "postgres",
-          "description": "PostgreSQL"
-        },
-        {
-          "choice": "sqlite",
-          "description": "SQLite"
+          "choice": "none",
+          "description": "Do not use any system logger."
         }
       ]
     },
-    "mssql": {
+    "seq": {
       "type": "computed",
-      "value": "(db == \"mssql\")"
+      "value": "(syslog == \"seq\")"
     },
-    "mysql": {
+    "exceptionless": {
       "type": "computed",
-      "value": "(db == \"mysql\")"
-    },
-    "postgres": {
-      "type": "computed",
-      "value": "(db == \"postgres\")"
-    },
-    "sqlite": {
-      "type": "computed",
-      "value": "(db == \"sqlite\")"
-    },
-    "mode": {
-      "type": "parameter",
-      "datatype": "choice",
-      "description": "Create a Dapr client, server, or both.",
-      "defaultValue": "client",
-      "choices": [
-        {
-          "choice": "client",
-          "description": "Create a Dapr client."
-        },
-        {
-          "choice": "server",
-          "description": "Create a Dapr server."
-        },
-        {
-          "choice": "clientServer",
-          "description": "Create a Dapr client and server."
-        }
-      ]
-    },
-    "clientMode": {
-      "type": "computed",
-      "value": "(mode == \"client\")"
-    },
-    "serverMode": {
-      "type": "computed",
-      "value": "(mode == \"server\")"
-    },
-    "clientServerMode": {
-      "type": "computed",
-      "value": "(mode == \"clientServer\")"
-    },
-    "grpc": {
-      "type": "parameter",
-      "datatype": "bool",
-      "description": "Whether to use gRPC.",
-      "defaultValue": "false"
-    },
-    "grpcClient" :{
-      "type": "computed",
-      "value": "(clientMode) && (grpc)"
-    },
-    "grpcServer" :{
-      "type": "computed",
-      "value": "(serverMode) && (grpc)"
-    },
-    "grpcClientServer" :{
-      "type": "computed",
-      "value": "(clientServerMode) && (grpc)"
-    },
-    "auth": {
-      "type": "parameter",
-      "datatype": "bool",
-      "description": "Add authorization middleware.",
-      "defaultValue": "true"
+      "value": "(syslog == \"exceptionless\")"
     },
     "kestrelHttpPort": {
       "type": "parameter",
@@ -182,7 +90,7 @@
     "https": {
       "type": "parameter",
       "datatype": "bool",
-      "defaultValue": "false",
+      "defaultValue": "true",
       "description": "Whether to turn on HTTPS."
     },
     "skipRestore": {
@@ -197,12 +105,6 @@
       "description": "Whether to initialize the project as a git repo on create.",
       "defaultValue": "false"
     },
-    "ef": {
-      "type": "parameter",
-      "datatype": "bool",
-      "description": "If specified, automatic install the Entity Framework Core NuGet package.",
-      "defaultValue": "false"
-    },
     "formatter": {
       "type": "parameter",
       "datatype": "bool",
@@ -212,10 +114,10 @@
   },
   "primaryOutputs": [
     {
-      "path": "Elfland.Dapr.csproj"
+      "path": "Elfland.Yarp.csproj"
     }
   ],
-  "defaultName": "Elfland.Dapr",
+  "defaultName": "Elfland.Yarp",
   "postActions": [
     {
       "id": "restore",
@@ -242,22 +144,6 @@
       "args": {
         "executable": "git",
         "args": "init"
-      },
-      "continueOnError": true
-    },
-    {
-      "id": "installEntityFrameworkCore",
-      "condition": "(ef)",
-      "description": "Install dotnet-ef.",
-      "manualInstructions": [
-        {
-          "text": "Run 'dotnet tool install --global dotnet-ef'"
-        }
-      ],
-      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
-      "args": {
-        "executable": "dotnet",
-        "args": "tool install --global dotnet-ef"
       },
       "continueOnError": true
     },

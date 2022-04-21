@@ -1,6 +1,7 @@
 using System.Net;
-using Elfland.WebApi.Infrastructure.ActionResults;
-using Elfland.WebApi.Infrastructure.Exceptions;
+using Elfland.Dapr.Infrastructure.ActionResults;
+using Elfland.Dapr.Infrastructure.Exceptions;
+using Elfland.Dapr.Infrastructure.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -31,7 +32,7 @@ public class HttpGlobalExceptionFilterAttribute : ExceptionFilterAttribute
 
         switch (context.Exception)
         {
-            case LogIgnoreException ex:
+            case LogUnneededException ex:
                 switch (ex)
                 {
                     case BadRequestException:
@@ -55,7 +56,7 @@ public class HttpGlobalExceptionFilterAttribute : ExceptionFilterAttribute
                         break;
                 }
                 break;
-            default:
+            case LogRequiredException ex:
                 string methodInfo =
                     $"{context.RouteData.Values["controller"] as string}Controller.{context.RouteData.Values["action"] as string}:{context.HttpContext.Request.Method}";
 
@@ -67,7 +68,9 @@ public class HttpGlobalExceptionFilterAttribute : ExceptionFilterAttribute
                 context.Result = new InternalServerErrorObjectResult(json);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                _logger.LogError(context.Exception.Message);
+                _logger.LogError(ex.Message);
+                break;
+            default:
                 break;
         }
         context.ExceptionHandled = true;

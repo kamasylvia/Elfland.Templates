@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace Elfland.WebApi.Infrastructure.Exceptions;
+namespace Elfland.Dapr.Infrastructure.Exceptions;
 
 public abstract class LogRequiredException : HttpExceptionBase
 {

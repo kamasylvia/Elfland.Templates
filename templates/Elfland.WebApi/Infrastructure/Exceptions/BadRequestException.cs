@@ -2,7 +2,7 @@
 
 namespace Elfland.WebApi.Infrastructure.Exceptions;
 
-public class BadRequestException : LogUnneededException
+public class BadRequestException : LogIgnoreException
 {
     public override int? StateCode { get; set; } = StatusCodes.Status400BadRequest;
 

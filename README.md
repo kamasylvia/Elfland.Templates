@@ -9,44 +9,22 @@ Elfland.Templates includes
   - `Serilog`: Simple .NET logging with fully-structured events.
   - `AutoMapper`: A convention-based object-object mapper.
   - `MediatR`: Simple, unambitious mediator implementation in .NET
+  - A system logger:
+    - `exceptionless`: Exceptionless provides real-time error, feature, and log reporting for your ASP.NET, Web API, WebForms, WPF, Console, and MVC apps. It organizes the gathered information into simple actionable data that will help your app become exceptionless. **Best of all, it’s open source!**
+    - `seq`: Seq creates the visibility you need to quickly identify and diagnose problems in complex applications and microservices.
+- Elfland.Dapr: Create a microservice project based on Elfland.WebApi and Dapr.
 
-# How to start
-1. Install Elfland.Templates
+# Building
+```sh
+dotnet pack
+```
 
+# Installation
+## Local installation
+```sh
+dotnet new --install bin/Debug/Elfland.Templates.1.0.0.nupkg
+```
+## NuGet installation
 ```sh
 dotnet new --install Elfland.Templates
-```
-
-2. New project from the template.
-
-```sh
-dotnet new elfwebapi -o <project_name>
-```
-
-3. Install and run your database provider
-
-```sh
-cd <project_root_path>
-docker run -d \
-    --name=PostgreSQL \
-    -e POSTGRES_DB=db \
-    -e POSTGRES_USER=root \
-    -e POSTGRES_PASSWORD=123456 \
-    -e TZ="Asia/Shanghai" \
-    -e PGTZ="Asia/Shanghai" \
-    -p 5432:5432  \
-    -v ${PWD}/Database:/var/lib/postgresql/data \
-    postgres:alpine
-```
-
-2. Use migrations to create a database. Make sure `dotnet-ef` is already installedd.
-
-```sh
-dotnet ef migrations add InitialMigration -c ApplicationDbContext --verbose
-```
-
-3. Run
-
-```sh
-docker run
 ```

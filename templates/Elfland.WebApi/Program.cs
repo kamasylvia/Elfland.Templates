@@ -3,6 +3,7 @@ using Elfland.WebApi.Data;
 using Elfland.WebApi.Data.Initializers;
 using Elfland.WebApi.Infrastructure.Filters;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 
@@ -40,7 +41,8 @@ try
 
     // Add services to the container.
     builder.Services.AddControllers(
-        options => {
+        options =>
+        {
             options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
         }
     );

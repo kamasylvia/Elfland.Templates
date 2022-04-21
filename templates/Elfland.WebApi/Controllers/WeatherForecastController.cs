@@ -16,6 +16,8 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<GetWeatherForecastResponse>> Get() =>
-        await _mediator.Send(new GetWeatherForecastRequest());
+    public async Task<IEnumerable<GetWeatherForecastResponse>> Get([FromQuery] GetWeatherForecastRequest request) =>
+        request.Message?.ToLower().Contains("exception") ?? false
+        ? throw new Exception()
+        : await _mediator.Send(request);
 }
