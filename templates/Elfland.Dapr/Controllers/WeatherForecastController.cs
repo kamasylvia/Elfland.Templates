@@ -1,3 +1,4 @@
+using Dapr;
 using Elfland.Dapr.Application.Queries.WeatherForecastQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
+    [Topic("pubsub", "GetWeatherForecast")]
     public async Task<IEnumerable<GetWeatherForecastResponse>> Get() =>
         await _mediator.Send(new GetWeatherForecastRequest());
 }

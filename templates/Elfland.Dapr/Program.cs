@@ -1,33 +1,16 @@
-using Elfland.Dapr.Data;
+using Dapr.Client;
+using Dapr.Extensions.Configuration;
 using Elfland.Dapr.Data.Initializers;
 using Elfland.Lake.Extensions;
-using Elfland.Ocean.Actors.Extensions;
-using Elfland.WebApi.Infrastructure.Filters;
-#if (grpc && !clientMode)
+using Elfland.Ocean.Extensions;
+using Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
+using Elfland.Dapr.Infrastructure.Filters;
+#if (grpcServer || grpcClientServer)
 using Elfland.Dapr.Services;
 #endif
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-
-// Serilog
-IConfiguration _configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile(
-        $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
-        optional: true,
-        reloadOnChange: true
-    )
-    .AddEnvironmentVariables()
-    .Build();
-
-
-Log.Logger = new LoggerConfiguration().ReadFrom
-    .Configuration(_configuration)
-    .Enrich.FromLogContext()
-    .CreateLogger();
-
 
 try
 {
@@ -35,57 +18,40 @@ try
 
     // StartUp
     var builder = WebApplication.CreateBuilder(args);
-    builder.Host.UseSerilog(
-        (hostingContext, loggerConfig) =>
-            loggerConfig.ReadFrom.Configuration(hostingContext.Configuration)
-    );
+
+    // Merge Dapr secret store into Configuration
+    builder.Configuration.AddDaprSecretStore("secretStore", new DaprClientBuilder().Build());
+
+    // Add Serilog
+    builder.AddCustomSerilog();
 
     // Add services to the container.
-#if (!grpcServer)
-    builder.Services.AddControllers(
-        options =>
-        {
-            options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
-        }
-    )
-    .AddDapr();
-#endif
+    builder.Services
+        .AddControllers(
+            options =>
+            {
+                options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
+            }
+        )
+        .AddDapr();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    // Add DbContexts
-    builder.Services.AddDbContext<ApplicationDbContext>(
-        options =>
-        {
-#if (postgres)
-            options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"));
-#elif (mssql)
-            options.UseSqlServer(Configuration.GetConnectionString("MsSQL"))
-#elif (SQLite)
-            options.UseSqlite(Configuration.GetConnectionString("SQLite"));
-#elif (mysql)
-            var connectionString = builder.Configuration.GetConnectionString("MySQL");
-            var serverVersion = MySqlServerVersion.AutoDetect(connectionString);
-            options.UseMySql(connectionString, serverVersion);
-#endif
-        }
-    );
-
-    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-
+    // Add database
+    builder.Services.AddCustomDatabase();
     // Add MediatR
     builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-    // AutoMapper
+    // Add AutoMapper
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-    // Add custom dependencies
-    builder.Services.AddDependencies();
+    // Add custom services
+    builder.Services.AddApplicationServices();
     // Add Actors
     builder.Services.AddDaprActors();
 
-#if (grpc && !clientMode)
+#if (grpcServer || grpcClientServer)
+    // Add gRPC
     builder.Services.AddGrpc();
 #endif
 
@@ -94,8 +60,10 @@ try
     // Seed data
     try
     {
-        if (args.Length == 1 && (args[0].ToLower().Contains("seed")
-            || args[0].ToLower().Contains("init")))
+        if (
+            args.Length == 1
+            && (args[0].ToLower().Contains("seed") || args[0].ToLower().Contains("init"))
+        )
         {
             await app.Services.InitializeDatabaseAsync();
         }
@@ -120,9 +88,13 @@ try
     app.UseAuthorization();
 #endif
 
+    app.UseCloudEvents();
+
     app.MapControllers();
 
-#if (grpc && !clientMode)
+    app.MapSubscribeHandler();
+
+#if (grpcServer || grpcClientServer)
     app.MapGrpcService<GrpcService>();
 #endif
 

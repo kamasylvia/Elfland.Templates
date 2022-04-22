@@ -11,7 +11,10 @@ public class HttpGlobalExceptionFilterAttribute : ExceptionFilterAttribute
     private readonly IWebHostEnvironment _env;
     private readonly ILogger<HttpGlobalExceptionFilterAttribute> _logger;
 
-    public HttpGlobalExceptionFilterAttribute(IWebHostEnvironment env, ILogger<HttpGlobalExceptionFilterAttribute> logger)
+    public HttpGlobalExceptionFilterAttribute(
+        IWebHostEnvironment env,
+        ILogger<HttpGlobalExceptionFilterAttribute> logger
+    )
     {
         _env = env ?? throw new ArgumentNullException(nameof(env));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -41,7 +44,10 @@ public class HttpGlobalExceptionFilterAttribute : ExceptionFilterAttribute
                             Status = StatusCodes.Status400BadRequest,
                             Detail = "Please refer to the errors property for additional details."
                         };
-                        problemDetails.Errors.Add("DomainValidations", new string[] { ex.Message ?? "Bad request." });
+                        problemDetails.Errors.Add(
+                            "DomainValidations",
+                            new string[] { ex.Message ?? "Bad request." }
+                        );
                         context.Result = new BadRequestObjectResult(problemDetails);
                         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;

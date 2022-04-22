@@ -12,5 +12,4 @@ public class NotFoundException : LogIgnoreException
 
     public NotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
     { }
-
 }

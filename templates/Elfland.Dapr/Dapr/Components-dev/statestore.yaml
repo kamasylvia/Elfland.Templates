@@ -10,6 +10,11 @@ spec:
     - name: redisHost
       value: localhost:6379
     - name: redisPassword
-      value: ""
+      secretKeyRef:
+        name: State.RedisPassword
+        key: State:RedisPassword
     - name: actorStateStore
       value: "true"
+
+auth:
+  secretStore: secretStore

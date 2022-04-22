@@ -24,15 +24,21 @@
           ]
         },
         {
-          "condition": "(!grpc) && (clientMode)",
+          "condition": "(!grpcServer) && (!grpcClientServer)",
           "exclude": [
             "Services/GrpcService.cs"
           ]
         },
         {
-          "condition": "(!grpc)",
+          "condition": "(disableGrpc) || (!protos)",
           "exclude": [
             "Protos/"
+          ]
+        },
+        {
+          "condition": "(!components)",
+          "exclude": [
+            "dapr/"
           ]
         }
       ]
@@ -79,55 +85,45 @@
       "type": "computed",
       "value": "(db == \"sqlite\")"
     },
-    "mode": {
+    "grpc": {
       "type": "parameter",
       "datatype": "choice",
-      "description": "Create a Dapr client, server, or both.",
-      "defaultValue": "client",
+      "description": "Add gRPC configurations.",
+      "defaultValue": "disable",
       "choices": [
         {
           "choice": "client",
-          "description": "Create a Dapr client."
+          "description": "gRPC client"
         },
         {
           "choice": "server",
-          "description": "Create a Dapr server."
+          "description": "gRPC server"
         },
         {
           "choice": "clientServer",
-          "description": "Create a Dapr client and server."
+          "description": "gRPC client and server"
+        },
+        {
+          "choice": "disable",
+          "description": "Disable gRPC."
         }
       ]
     },
-    "clientMode": {
+    "grpcClient": {
       "type": "computed",
-      "value": "(mode == \"client\")"
+      "value": "(grpc) == \"client\""
     },
-    "serverMode": {
+    "grpcServer": {
       "type": "computed",
-      "value": "(mode == \"server\")"
+      "value": "(grpc) == \"server\""
     },
-    "clientServerMode": {
+    "grpcClientServer": {
       "type": "computed",
-      "value": "(mode == \"clientServer\")"
+      "value": "(grpc) == \"clientServer\""
     },
-    "grpc": {
-      "type": "parameter",
-      "datatype": "bool",
-      "description": "Whether to use gRPC.",
-      "defaultValue": "false"
-    },
-    "grpcClient" :{
+    "disableGrpc": {
       "type": "computed",
-      "value": "(clientMode) && (grpc)"
-    },
-    "grpcServer" :{
-      "type": "computed",
-      "value": "(serverMode) && (grpc)"
-    },
-    "grpcClientServer" :{
-      "type": "computed",
-      "value": "(clientServerMode) && (grpc)"
+      "value": "(grpc) == \"disable\""
     },
     "auth": {
       "type": "parameter",
@@ -207,6 +203,18 @@
       "type": "parameter",
       "datatype": "bool",
       "description": "If specified, automatic install the CSharpier NuGet package.",
+      "defaultValue": "false"
+    },
+    "components": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Whether to include a Dapr components folder.",
+      "defaultValue": "false"
+    },
+    "protos": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Whether to include a gRPC protos folder.",
       "defaultValue": "false"
     }
   },

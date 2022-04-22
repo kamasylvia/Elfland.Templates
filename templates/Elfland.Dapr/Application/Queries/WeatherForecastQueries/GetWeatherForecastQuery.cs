@@ -2,14 +2,10 @@ using MediatR;
 
 namespace Elfland.Dapr.Application.Queries.WeatherForecastQueries;
 
-public record GetWeatherForecastRequest : IRequest<IEnumerable<GetWeatherForecastResponse>> { }
-
-#if (grpc)
-public record GetWeatherForecastGrpcRequest : IRequest<IEnumerable<GetWeatherForecastResponse>>
+public record GetWeatherForecastRequest : IRequest<IEnumerable<GetWeatherForecastResponse>>
 {
-    public GetWeatherForecastRequest? Request { get; set; }
+    public string? Message { get; set; }
 }
-#endif
 
 public record GetWeatherForecastResponse
 {

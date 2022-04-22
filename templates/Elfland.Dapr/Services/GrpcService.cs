@@ -1,5 +1,6 @@
 using Dapr.AppCallback.Autogen.Grpc.v1;
 using Dapr.Client.Autogen.Grpc.v1;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using MediatR;
 
@@ -14,21 +15,20 @@ public class GrpcService : AppCallback.AppCallbackBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    public override async Task<InvokeResponse> OnInvoke(InvokeRequest request, ServerCallContext context)
+    public override async Task<InvokeResponse> OnInvoke(
+        InvokeRequest request,
+        ServerCallContext context
+    )
     {
         var response = new InvokeResponse();
         switch (request.Method)
         {
-            case "sayhi":
-                // This GetWeatherForecastRequest is a defined in .proto file,
-                // not in Application.Queries.WeatherForecastQueries.GetWeatherForecastRequest.
+            case "greet":
+                // The code below require a MediatR.IRequestHandler which accepts a HelloRequest request, and return a HelloReply response.
 
                 // response.Data = Any.Pack(
                 //     await _mediator.Send(
-                //         new GetWeatherForecastGrpcRequest
-                //         {
-                //             Request = request.Data.Unpack<GetWeatherForecastRequest>()
-                //         }
+                //         request.Data.Unpack<HelloRequest>()
                 //     )
                 // );
                 break;

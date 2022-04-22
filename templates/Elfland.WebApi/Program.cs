@@ -1,31 +1,10 @@
 using Elfland.Lake.Extensions;
-using Elfland.WebApi.Data;
 using Elfland.WebApi.Data.Initializers;
+using Elfland.WebApi.Infrastructure.Extensions.ProgramExtensions;
 using Elfland.WebApi.Infrastructure.Filters;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-
-
-
-// Serilog
-IConfiguration _configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile(
-        $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
-        optional: true,
-        reloadOnChange: true
-    )
-    .AddEnvironmentVariables()
-    .Build();
-
-
-Log.Logger = new LoggerConfiguration().ReadFrom
-    .Configuration(_configuration)
-    .Enrich.FromLogContext()
-    .CreateLogger();
-
 
 try
 {
@@ -33,11 +12,8 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
-    // StartUp
-    builder.Host.UseSerilog(
-        (hostingContext, loggerConfig) =>
-            loggerConfig.ReadFrom.Configuration(hostingContext.Configuration)
-    );
+    // Add Serilog
+    builder.AddCustomSerilog();
 
     // Add services to the container.
     builder.Services.AddControllers(
@@ -51,42 +27,24 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    // Add DbContexts
-    builder.Services.AddDbContext<ApplicationDbContext>(
-        options =>
-        {
-#if (postgres)
-            options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"));
-#elif (mssql)
-            options.UseSqlServer(builder.Configuration.GetConnectionString("MsSQL"))
-#elif (SQLite)
-            options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
-#elif (mysql)
-            var connectionString = builder.Configuration.GetConnectionString("MySQL");
-            var serverVersion = MySqlServerVersion.AutoDetect(connectionString);
-            options.UseMySql(connectionString, serverVersion);
-#endif
-        }
-    );
-
-    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-
+    // Add database
+    builder.Services.AddCustomDatabase();
     // Add MediatR
     builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-    // AutoMapper
+    // Add AutoMapper
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-    // Add custom dependencies
-    builder.Services.AddDependencies();
-
+    // Add custom services
+    builder.Services.AddApplicationServices();
 
     var app = builder.Build();
 
     // Seed data
     try
     {
-        if (args.Length == 1 && (args[0].ToLower().Contains("seed")
-            || args[0].ToLower().Contains("init")))
+        if (
+            args.Length == 1
+            && (args[0].ToLower().Contains("seed") || args[0].ToLower().Contains("init"))
+        )
         {
             await app.Services.InitializeDatabaseAsync();
         }

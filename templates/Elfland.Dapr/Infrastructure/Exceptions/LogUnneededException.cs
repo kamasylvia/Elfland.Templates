@@ -8,5 +8,6 @@ public abstract class LogIgnoreException : HttpExceptionBase
 
     protected LogIgnoreException(string message) : base(message) { }
 
-    protected LogIgnoreException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    protected LogIgnoreException(SerializationInfo info, StreamingContext context)
+        : base(info, context) { }
 }

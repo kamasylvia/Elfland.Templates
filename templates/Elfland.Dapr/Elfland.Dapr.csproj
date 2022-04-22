@@ -9,10 +9,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.7.0" />
+    <PackageReference Include="Dapr.Extensions.Configuration" Version="1.7.0" />
     <PackageReference Include="Elfland.Forest" Version="20220405.2.0" />
-    <PackageReference Include="Elfland.Lake" Version="20220413.1.0" />
-    <PackageReference Include="Elfland.Ocean" Version="20220419.2.0" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.44.0" Condition="'$(grpc)' == 'True'" />
+    <PackageReference Include="Elfland.Lake" Version="20220422.1.0" />
+    <PackageReference Include="Elfland.Ocean" Version="20220422.1.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.44.0" Condition="'$(disableGrpc)' == 'False'" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3" />
@@ -32,5 +33,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.Linq.Async.Queryable" Version="6.0.1" />
   </ItemGroup>
-
+  <ItemGroup Condition="'$(disableGrpc)' == 'False'">
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Client" Condition="'$(grpcClient)' == 'True'" />
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" Condition="'$(grpcServer)' == 'True'" />
+    <Protobuf Include="Protos\greet.proto" GrpcServices="ClientServer" Condition="'$(grpcClientServer)' == 'True'" />
+  </ItemGroup>
 </Project>
