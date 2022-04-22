@@ -1,20 +1,21 @@
 using Elfland.Dapr.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
 
 public static partial class ProgramExtensions
 {
-    public static void AddCustomDatabase(this IServiceCollection services)
+    public static void AddCustomDatabase(this WebApplicationBuilder builder)
     {
-        services.AddDbContext<ApplicationDbContext>(
+        builder.Services.AddDbContext<ApplicationDbContext>(
             options =>
             {
 #if (postgres)
                 options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"));
 #elif (mssql)
-                options.UseSqlServer(Configuration.GetConnectionString("MsSQL"))
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MsSQL"))
 #elif (SQLite)
-                options.UseSqlite(Configuration.GetConnectionString("SQLite"));
+                options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
 #elif (mysql)
                 var connectionString = builder.Configuration.GetConnectionString("MySQL");
                 var serverVersion = MySqlServerVersion.AutoDetect(connectionString);
@@ -23,6 +24,6 @@ public static partial class ProgramExtensions
             }
         );
 
-        services.AddDatabaseDeveloperPageExceptionFilter();
+        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     }
 }

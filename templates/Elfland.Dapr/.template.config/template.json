@@ -17,13 +17,6 @@
     {
       "modifiers": [
         {
-          "condition": "(!actors)",
-          "exclude": [
-            "Application/Actors/",
-            "Infrastructure/DependencyInjection/Actors.cs"
-          ]
-        },
-        {
           "condition": "(!grpcServer) && (!grpcClientServer)",
           "exclude": [
             "Services/GrpcService.cs"
@@ -32,13 +25,13 @@
         {
           "condition": "(disableGrpc) || (!protos)",
           "exclude": [
-            "Protos/"
+            "Protos/**/*"
           ]
         },
         {
           "condition": "(!components)",
           "exclude": [
-            "dapr/"
+            "dapr/**/*"
           ]
         }
       ]

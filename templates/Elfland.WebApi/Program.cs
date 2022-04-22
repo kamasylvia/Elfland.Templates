@@ -3,7 +3,6 @@ using Elfland.WebApi.Data.Initializers;
 using Elfland.WebApi.Infrastructure.Extensions.ProgramExtensions;
 using Elfland.WebApi.Infrastructure.Filters;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 try
@@ -28,7 +27,7 @@ try
     builder.Services.AddSwaggerGen();
 
     // Add database
-    builder.Services.AddCustomDatabase();
+    builder.AddCustomDatabase();
     // Add MediatR
     builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
     // Add AutoMapper

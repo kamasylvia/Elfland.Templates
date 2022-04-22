@@ -9,7 +9,6 @@ using Elfland.Dapr.Infrastructure.Filters;
 using Elfland.Dapr.Services;
 #endif
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 try
@@ -40,7 +39,7 @@ try
     builder.Services.AddSwaggerGen();
 
     // Add database
-    builder.Services.AddCustomDatabase();
+    builder.AddCustomDatabase();
     // Add MediatR
     builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
     // Add AutoMapper
@@ -82,12 +81,12 @@ try
 
 #if (https)
     app.UseHttpsRedirection();
-#endif
 
+#endif
 #if (auth)
     app.UseAuthorization();
-#endif
 
+#endif
     app.UseCloudEvents();
 
     app.MapControllers();
@@ -96,11 +95,9 @@ try
 
 #if (grpcServer || grpcClientServer)
     app.MapGrpcService<GrpcService>();
-#endif
 
-#if (actors)
-    app.MapActorsHandlers();
 #endif
+    app.MapActorsHandlers();
 
     app.Run();
 }
