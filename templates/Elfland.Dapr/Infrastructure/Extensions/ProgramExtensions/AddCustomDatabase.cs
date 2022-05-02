@@ -1,5 +1,4 @@
 using Elfland.Dapr.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
 

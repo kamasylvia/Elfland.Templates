@@ -1,5 +1,3 @@
-using Serilog;
-
 namespace Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
 
 public static partial class ProgramExtensions

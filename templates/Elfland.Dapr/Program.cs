@@ -8,8 +8,6 @@ using Elfland.Dapr.Infrastructure.Filters;
 #if (grpcServer || grpcClientServer)
 using Elfland.Dapr.Services;
 #endif
-using MediatR;
-using Serilog;
 
 try
 {
@@ -91,13 +89,15 @@ try
 
     app.MapControllers();
 
+    // The below code cause an error if no actors are existed.
+    // app.MapActorsHandlers();
+
     app.MapSubscribeHandler();
 
 #if (grpcServer || grpcClientServer)
     app.MapGrpcService<GrpcService>();
 
 #endif
-    app.MapActorsHandlers();
 
     app.Run();
 }

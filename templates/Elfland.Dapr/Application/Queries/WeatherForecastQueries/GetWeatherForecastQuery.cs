@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Elfland.Dapr.Application.Queries.WeatherForecastQueries;
 
 public record GetWeatherForecastRequest : IRequest<IEnumerable<GetWeatherForecastResponse>>

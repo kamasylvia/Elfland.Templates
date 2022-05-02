@@ -1,0 +1,10 @@
+global using System.ComponentModel.DataAnnotations;
+global using AutoMapper;
+global using Dapr;
+global using Dapr.Actors;
+global using Dapr.Actors.Client;
+global using Dapr.Actors.Runtime;
+global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Serilog;

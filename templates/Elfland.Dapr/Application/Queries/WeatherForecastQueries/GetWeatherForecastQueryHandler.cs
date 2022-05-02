@@ -1,7 +1,4 @@
-using Dapr.Actors;
-using Dapr.Actors.Client;
 using Elfland.Dapr.Application.Actors.WeatherForecastActors;
-using MediatR;
 
 namespace Elfland.Dapr.Application.Queries.WeatherForecastQueries;
 

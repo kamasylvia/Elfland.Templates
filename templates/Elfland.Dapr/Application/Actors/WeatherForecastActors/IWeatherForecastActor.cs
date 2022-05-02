@@ -1,4 +1,3 @@
-using Dapr.Actors;
 using Elfland.Dapr.Application.Queries.WeatherForecastQueries;
 
 namespace Elfland.Dapr.Application.Actors.WeatherForecastActors;
