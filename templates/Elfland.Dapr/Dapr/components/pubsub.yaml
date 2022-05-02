@@ -4,22 +4,15 @@ metadata:
   name: pubsub
   namespace: default
 spec:
-  type: pubsub.kafka
+  type: pubsub.redis
   version: v1
   metadata:
-      # Kafka broker connection setting
-    - name: brokers
-      value: "dapr-kafka.myapp.svc.cluster.local:9092"
-    - name: authRequired
-      value: "true"
-    - name: saslUsername
-      value: "adminuser"
-    - name: saslPassword
-      secretKeyRef:
-        name: kafaka-secret
-        key: PubSub:Kafka
-    - name: maxMessageBytes
-      value: 1024
+  - name: redisHost
+    value: localhost:6379
+  - name: redisPassword
+    secretKeyRef:
+      name: RedisPassword
+      key: RedisPassword
 
 auth:
   secretStore: secretStore
