@@ -39,3 +39,16 @@ dotnet new elfdapr -o <path> [options]
 | `--mode`      | To create a Dapr client, server, or both.                  | `client`,`server`,`clientServer`       | `client`        |
 
 ## Running
+### Development Environment
+```sh
+dapr run --dapr-http-port 3500 \
+   --app-id <project name> \
+   --app-port <port> \
+   --components-path <components path> \
+   -- dotnet run --project <project path>
+```
+
+- The default `<components path>` is `dapr/components`. If another path is set, the secret file path in `dapr/components/secretStore.yaml` should be modified.
+
+### Production Environment
+Docker-compose or Kubernetes
