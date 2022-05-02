@@ -1,6 +1,4 @@
-using AutoMapper;
 using Elfland.WebApi.Data.Entities;
-using MediatR;
 
 namespace Elfland.WebApi.Application.Queries.WeatherForecastQueries;
 

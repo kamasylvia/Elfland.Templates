@@ -202,7 +202,7 @@
       "type": "parameter",
       "datatype": "bool",
       "description": "Whether to include a Dapr components folder.",
-      "defaultValue": "false"
+      "defaultValue": "true"
     },
     "protos": {
       "type": "parameter",

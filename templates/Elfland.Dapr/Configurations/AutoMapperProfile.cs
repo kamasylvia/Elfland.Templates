@@ -1,4 +1,3 @@
-using AutoMapper;
 using Elfland.Dapr.Application.Queries.WeatherForecastQueries;
 using Elfland.Dapr.Data.Entities;
 

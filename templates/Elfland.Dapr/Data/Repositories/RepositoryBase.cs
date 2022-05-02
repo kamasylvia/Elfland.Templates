@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace Elfland.Dapr.Data.Repositories;
 
 public abstract class RepositoryBase<T> : IRepository<T> where T : class

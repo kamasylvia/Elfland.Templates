@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Elfland.WebApi.Infrastructure.ActionResults;
 
 public class InternalServerErrorObjectResult : ObjectResult

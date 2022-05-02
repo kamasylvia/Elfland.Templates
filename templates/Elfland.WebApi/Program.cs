@@ -2,8 +2,6 @@ using Elfland.Lake.Extensions;
 using Elfland.WebApi.Data.Initializers;
 using Elfland.WebApi.Infrastructure.Extensions.ProgramExtensions;
 using Elfland.WebApi.Infrastructure.Filters;
-using MediatR;
-using Serilog;
 
 try
 {

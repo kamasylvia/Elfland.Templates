@@ -1,6 +1,4 @@
 ﻿using Elfland.Dapr.Data.Entities;
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
 
 namespace Elfland.Dapr.Data.Initializers;
 

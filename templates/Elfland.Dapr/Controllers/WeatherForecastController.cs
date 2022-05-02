@@ -1,7 +1,4 @@
-using Dapr;
 using Elfland.Dapr.Application.Queries.WeatherForecastQueries;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Elfland.Dapr.Controllers;
 

@@ -1,5 +1,4 @@
 using Elfland.WebApi.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Elfland.WebApi.Infrastructure.Extensions.ProgramExtensions;
 

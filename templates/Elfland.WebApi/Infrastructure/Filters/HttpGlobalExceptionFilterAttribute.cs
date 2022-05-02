@@ -1,7 +1,6 @@
 using System.Net;
 using Elfland.WebApi.Infrastructure.ActionResults;
 using Elfland.WebApi.Infrastructure.Exceptions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Elfland.WebApi.Infrastructure.Filters;

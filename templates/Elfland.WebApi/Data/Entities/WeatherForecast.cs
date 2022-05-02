@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using MassTransit;
-
 namespace Elfland.WebApi.Data.Entities;
 
 public class WeatherForecast

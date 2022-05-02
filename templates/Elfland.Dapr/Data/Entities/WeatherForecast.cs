@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using MassTransit;
-
 namespace Elfland.Dapr.Data.Entities;
 
 public class WeatherForecast

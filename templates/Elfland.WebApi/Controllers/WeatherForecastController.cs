@@ -1,6 +1,4 @@
 using Elfland.WebApi.Application.Queries.WeatherForecastQueries;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Elfland.WebApi.Controllers;
 

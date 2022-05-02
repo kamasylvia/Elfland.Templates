@@ -1,6 +1,4 @@
 ﻿using Elfland.WebApi.Data.Entities;
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
 
 namespace Elfland.WebApi.Data;
 

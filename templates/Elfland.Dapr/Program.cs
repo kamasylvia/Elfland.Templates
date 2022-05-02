@@ -1,10 +1,9 @@
-using Dapr.Client;
 using Dapr.Extensions.Configuration;
 using Elfland.Dapr.Data.Initializers;
-using Elfland.Lake.Extensions;
-using Elfland.Ocean.Extensions;
 using Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
 using Elfland.Dapr.Infrastructure.Filters;
+using Elfland.Lake.Extensions;
+using Elfland.Ocean.Extensions;
 #if (grpcServer || grpcClientServer)
 using Elfland.Dapr.Services;
 #endif
@@ -89,8 +88,7 @@ try
 
     app.MapControllers();
 
-    // The below code cause an error if no actors are existed.
-    // app.MapActorsHandlers();
+    app.MapActorsHandlers();
 
     app.MapSubscribeHandler();
 

@@ -1,4 +1,3 @@
-using AutoMapper;
 using Elfland.WebApi.Application.Queries.WeatherForecastQueries;
 using Elfland.WebApi.Data.Entities;
 
