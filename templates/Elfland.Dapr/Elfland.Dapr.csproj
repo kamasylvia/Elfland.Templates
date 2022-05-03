@@ -12,7 +12,7 @@
     <PackageReference Include="Dapr.Extensions.Configuration" Version="1.7.0" />
     <PackageReference Include="Elfland.Forest" Version="20220405.2.0" />
     <PackageReference Include="Elfland.Lake" Version="20220422.1.0" />
-    <PackageReference Include="Elfland.Ocean" Version="20220422.1.0" />
+    <PackageReference Include="Elfland.Ocean" Version="20220502.1.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.44.0" Condition="'$(disableGrpc)' == 'False'" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
