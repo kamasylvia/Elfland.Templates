@@ -29,7 +29,7 @@
           ]
         },
         {
-          "condition": "(!components)",
+          "condition": "(noComponents)",
           "exclude": [
             "dapr/**/*"
           ]
@@ -198,11 +198,11 @@
       "description": "If specified, automatic install the CSharpier NuGet package.",
       "defaultValue": "false"
     },
-    "components": {
+    "noComponents": {
       "type": "parameter",
       "datatype": "bool",
       "description": "Whether to include a Dapr components folder.",
-      "defaultValue": "true"
+      "defaultValue": "false"
     },
     "protos": {
       "type": "parameter",
