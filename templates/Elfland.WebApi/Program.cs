@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Elfland.Lake.Extensions;
 using Elfland.WebApi.Data.Initializers;
 using Elfland.WebApi.Infrastructure.Extensions.ProgramExtensions;
@@ -17,6 +18,13 @@ try
         options =>
         {
             options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
+        }
+    )
+    .AddJsonOptions(
+        options =>
+        {
+            options.JsonSerializerOptions.Converters
+                .Add(new JsonStringEnumConverter());
         }
     );
 

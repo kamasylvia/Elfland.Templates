@@ -16,11 +16,21 @@ public class ApplicationDbContext : DbContext
     }
 
 #if (postgres)
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("PostgreSQL"));
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("PostgreSQL"));
+        }
+    }
 #elif (mssql)
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MsSQL"));
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MsSQL"));
+        }
+    }
 #endif
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -30,10 +40,5 @@ public class ApplicationDbContext : DbContext
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
-
-        builder
-            .Entity<WeatherForecast>()
-            .Property<NewId>(entity => entity.Id)
-            .HasConversion(newId => newId.ToString(), stringId => new NewId(stringId));
     }
 }

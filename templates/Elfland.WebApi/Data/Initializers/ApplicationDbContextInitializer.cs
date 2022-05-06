@@ -36,7 +36,6 @@ public static class ApplicationDbContextInitializer
         // Add special data
         var weatherForecast = new WeatherForecast
         {
-            Id = NewId.Next(),
             Date = DateTime.UtcNow, // There is a bug of local time in the current version of PostgreSQL .
             TemperatureC = -10,
             Summary = "Seed data"

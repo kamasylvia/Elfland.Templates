@@ -36,7 +36,6 @@ public static class ApplicationDbContextInitializer
         // Add special data
         var weatherForecast = new WeatherForecast
         {
-            Id = NewId.Next(),
             Date = DateTime.Now,
             TemperatureC = -10,
             Summary = "Seed data"

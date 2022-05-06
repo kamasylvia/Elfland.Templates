@@ -3,7 +3,7 @@ namespace Elfland.WebApi.Data.Entities;
 public class WeatherForecast
 {
     [Key]
-    public NewId Id { get; set; }
+    public Guid? Id { get; set; } = NewId.NextGuid();
 
     public DateTime Date { get; set; }
 

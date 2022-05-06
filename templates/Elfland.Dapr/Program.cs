@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Dapr.Extensions.Configuration;
 using Elfland.Dapr.Data.Initializers;
 using Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
@@ -27,6 +28,13 @@ try
             options =>
             {
                 options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
+            }
+        )
+        .AddJsonOptions(
+            options =>
+            {
+                options.JsonSerializerOptions.Converters
+                    .Add(new JsonStringEnumConverter());
             }
         )
         .AddDapr();

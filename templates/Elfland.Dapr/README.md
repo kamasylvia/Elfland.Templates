@@ -38,8 +38,17 @@ dotnet new elfdapr -o <path> [options]
 | `--grpc`      | Whether to use gRPC.                                       | bool                                   | `false`         |
 | `--mode`      | To create a Dapr client, server, or both.                  | `client`,`server`,`clientServer`       | `client`        |
 
-## Running
-### Development Environment
+## How to run
+### Development environment
+#### Migrations
+```sh
+dapr run --dapr-http-port 3500 \
+   --app-id <project name> \
+   --app-port <port> \
+   --components-path <components path> \
+   -- dotnet ef migrations add <commit> -c <ApplicationDbContext> --verbose
+```
+#### Run
 ```sh
 dapr run --dapr-http-port 3500 \
    --app-id <project name> \
@@ -48,7 +57,7 @@ dapr run --dapr-http-port 3500 \
    -- dotnet run --project <project path>
 ```
 
-- The default `<components path>` is `dapr/components`. If another path is set, the secret file path in `dapr/components/secretStore.yaml` should be modified.
+- The default `<components path>` is `dapr/components`. If this folder is moved, the secret file path in `dapr/components/secretStore.yaml` should be modified.
 
-### Production Environment
+### Production environment
 Docker-compose or Kubernetes
