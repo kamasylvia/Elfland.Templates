@@ -28,7 +28,7 @@ public abstract class RepositoryBase<T> : IRepository<T> where T : class
 
     public virtual void Remove(T item) => _context.Set<T>().Remove(item);
 
-    public virtual async Task<bool> SaveAsync() => await _context.SaveChangesAsync() >= 0;
+    public virtual async Task<bool> SaveChangesAsync() => await _context.SaveChangesAsync() >= 0;
 
     public virtual void Update(T item) => _context.Set<T>().Update(item);
 }

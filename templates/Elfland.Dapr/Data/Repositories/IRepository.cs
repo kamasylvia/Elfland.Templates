@@ -16,5 +16,7 @@ public interface IRepository<T> where T : class
 
     Task<T> FindByIdAsync(params object[] keyValues);
 
+    Task<bool> SaveChangesAsync();
+
     Task<bool> ExistsAsync(params object[] keyValues);
 }
