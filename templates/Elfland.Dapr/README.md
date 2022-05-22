@@ -54,7 +54,7 @@ dapr run --dapr-http-port 3500 \
    --app-id <project name> \
    --app-port <port> \
    --components-path <components path> \
-   -- dotnet run --project <project path>
+   -- dotnet watch run --project <project path> --no-hot-reload
 ```
 
 - The default `<components path>` is `dapr/components`. If this folder is moved, the secret file path in `dapr/components/secretStore.yaml` should be modified.

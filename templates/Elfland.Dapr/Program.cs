@@ -33,6 +33,13 @@ try
         .AddJsonOptions(
             options =>
             {
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            }
+        )
+        .AddJsonOptions(
+            options =>
+            {
                 options.JsonSerializerOptions.Converters
                     .Add(new JsonStringEnumConverter());
             }
