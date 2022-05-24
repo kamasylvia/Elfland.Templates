@@ -8,15 +8,15 @@ namespace Elfland.IdentityServer.Data;
 
 public class ApplicationDbContext
     : IdentityDbContext<
-          ApplicationUser,
-          ApplicationRole,
-          NewId,
-          IdentityUserClaim<NewId>,
-          ApplicationUserRole,
-          IdentityUserLogin<NewId>,
-          IdentityRoleClaim<NewId>,
-          IdentityUserToken<NewId>
-      >
+        ApplicationUser,
+        ApplicationRole,
+        NewId,
+        IdentityUserClaim<NewId>,
+        ApplicationUserRole,
+        IdentityUserLogin<NewId>,
+        IdentityRoleClaim<NewId>,
+        IdentityUserToken<NewId>
+    >
 {
     private readonly IConfiguration _configuration;
 

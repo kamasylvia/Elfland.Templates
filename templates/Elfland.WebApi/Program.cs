@@ -15,18 +15,14 @@ try
 
     // Add services to the container.
     builder.Services
-        .AddControllers(
-            options =>
-            {
-                options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
-            }
-        )
-        .AddJsonOptions(
-            options =>
-            {
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            }
-        );
+        .AddControllers(options =>
+        {
+            options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
+        })
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
