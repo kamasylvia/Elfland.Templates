@@ -1,6 +1,6 @@
-using Elfland.Dapr.Data;
+using Elfland.WebApi.Data;
 
-namespace Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
+namespace Elfland.WebApi.Extensions.ProgramExtensions;
 
 public static partial class ProgramExtensions
 {

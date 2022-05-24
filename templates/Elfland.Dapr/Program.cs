@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Dapr.Extensions.Configuration;
 using Elfland.Dapr.Data.Initializers;
-using Elfland.Dapr.Infrastructure.Extensions.ProgramExtensions;
+using Elfland.Dapr.Extensions.ProgramExtensions;
 using Elfland.Dapr.Infrastructure.Filters;
 using Elfland.Lake.Extensions;
 using Elfland.Ocean.Extensions;
