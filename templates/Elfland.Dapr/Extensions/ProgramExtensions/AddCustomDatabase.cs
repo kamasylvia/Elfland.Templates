@@ -1,5 +1,3 @@
-using Elfland.Dapr.Data;
-
 namespace Elfland.Dapr.Extensions.ProgramExtensions;
 
 public static partial class ProgramExtensions

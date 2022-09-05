@@ -27,31 +27,37 @@ dotnet new elfdapr -o <path> [options]
 ```
 
 ### Options
-| Name          | Description                                                | Arguments                              | Default         |
-| ------------- | ---------------------------------------------------------- | -------------------------------------- | --------------- |
-| `--db`        | Choose a database provider for the project.                | `postgres`, `mssql`, `mysql`, `sqlite` | `postgres`      |
-| `--https`     | Whether to turn on HTTPS.                                  | bool                                   | `false`         |
-| `--git`       | Whether to initialize the project as a git repo on create. | bool                                   | `false`         |
-| `--ef`        | Whether to install `dotnet-ef`.                            | bool                                   | `false`         |
-| `--formatter` | Whether to install the code formatter `csharpier`.         | bool                                   | `false`         |
-| `--syslog`    | Choose a system logger for the project.                    | `seq`, `exceptionless`, `none`         | `exceptionless` |
-| `--grpc`      | Whether to use gRPC.                                       | bool                                   | `false`         |
-| `--mode`      | To create a Dapr client, server, or both.                  | `client`,`server`,`clientServer`       | `client`        |
+| Name             | Description                                                | Arguments                              | Default         |
+| ---------------- | ---------------------------------------------------------- | -------------------------------------- | --------------- |
+| `init` or `seed` | Seed data after migrations.                                |                                        |
+| `--db`           | Choose a database provider for the project.                | `postgres`, `mssql`, `mysql`, `sqlite` | `postgres`      |
+| `--https`        | Whether to turn on HTTPS.                                  | bool                                   | `false`         |
+| `--git`          | Whether to initialize the project as a git repo on create. | bool                                   | `false`         |
+| `--ef`           | Whether to install `dotnet-ef`.                            | bool                                   | `false`         |
+| `--formatter`    | Whether to install the code formatter `csharpier`.         | bool                                   | `false`         |
+| `--logger`       | Choose a system logger for the project.                    | `seq`, `exceptionless`, `none`         | `exceptionless` |
+| `--grpc`         | Whether to use gRPC.                                       | bool                                   | `false`         |
+| `--mode`         | To create a Dapr client, server, or both.                  | `client`,`server`,`clientServer`       | `client`        |
 
 ## How to run
 ### Development environment
 #### Migrations
 ```sh
-dapr run --dapr-http-port 3500 \
-   --app-id <project name> \
+dapr run --app-id <project name> \
    --app-port <port> \
    --components-path <components path> \
-   -- dotnet ef migrations add <commit> -c <ApplicationDbContext> --verbose
+   -- dotnet ef migrations add <commit> -c <ApplicationDbContext> -p <project> --verbose
 ```
 #### Run
 ```sh
-dapr run --dapr-http-port 3500 \
-   --app-id <project name> \
+dapr run --app-id <project name> \
+   --app-port <port> \
+   --components-path <components path> \
+   -- dotnet run --project <project path>
+```
+#### Watch run
+```sh
+dapr run --app-id <project name> \
    --app-port <port> \
    --components-path <components path> \
    -- dotnet watch run --project <project path> --no-hot-reload

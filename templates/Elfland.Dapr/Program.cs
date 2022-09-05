@@ -24,25 +24,17 @@ try
 
     // Add services to the container.
     builder.Services
-        .AddControllers(
-            options =>
-            {
-                options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
-            }
-        )
-        .AddJsonOptions(
-            options =>
-            {
-                options.JsonSerializerOptions.WriteIndented = true;
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            }
-        )
-        .AddJsonOptions(
-            options =>
-            {
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            }
-        )
+        .AddControllers(options =>
+        {
+            options.Filters.Add<HttpGlobalExceptionFilterAttribute>();
+        })
+        .AddJsonOptions(options =>
+        {
+            // Indented
+            options.JsonSerializerOptions.WriteIndented = true;
+            // Enum
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        })
         .AddDapr();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -55,6 +47,8 @@ try
     builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
     // Add AutoMapper
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    // Add UoW
+    builder.Services.AddScoped<UnitOfWork>();
     // Add custom services
     builder.Services.AddApplicationServices();
     // Add Actors
@@ -110,7 +104,6 @@ try
     app.MapGrpcService<GrpcService>();
 
 #endif
-
     app.Run();
 }
 catch (Exception ex)

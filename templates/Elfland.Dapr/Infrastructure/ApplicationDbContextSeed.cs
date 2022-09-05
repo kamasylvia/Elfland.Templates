@@ -1,8 +1,6 @@
-﻿using Elfland.Dapr.Data.Entities;
+﻿namespace Elfland.Dapr.Data.Initializers;
 
-namespace Elfland.Dapr.Data.Initializers;
-
-public static class ApplicationDbContextInitializer
+public static class ApplicationDbContextSeed
 {
     public static async Task InitializeDatabaseAsync(this IServiceProvider serviceProvider)
     {
@@ -23,7 +21,7 @@ public static class ApplicationDbContextInitializer
         }
 
         // Check database
-        if (context?.WeatherForecasts?.Any() ?? true)
+        if (context?.Spreadsheets?.Any() ?? true)
         {
             return; // Database does not exist or already been seeded.
         }
@@ -34,14 +32,5 @@ public static class ApplicationDbContextInitializer
     private static async Task SeedDataAsync(this ApplicationDbContext context)
     {
         // Add special data
-        var weatherForecast = new WeatherForecast
-        {
-            Date = DateTime.Now,
-            TemperatureC = -10,
-            Summary = "Seed data"
-        };
-
-        await context.WeatherForecasts!.AddAsync(weatherForecast);
-        await context.SaveChangesAsync();
     }
 }

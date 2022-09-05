@@ -33,23 +33,23 @@ public class HttpGlobalExceptionFilterAttribute : ExceptionFilterAttribute
 
         switch (context.Exception)
         {
+            case BadHttpRequestException ex:
+                var problemDetails = new ValidationProblemDetails()
+                {
+                    Instance = context.HttpContext.Request.Path,
+                    Status = ex.StatusCode,
+                    Detail = "Please refer to the errors property for additional details."
+                };
+                problemDetails.Errors.Add(
+                    "DomainValidations",
+                    new string[] { ex.Message ?? "Bad request." }
+                );
+                context.Result = new BadRequestObjectResult(problemDetails);
+                context.HttpContext.Response.StatusCode = ex.StatusCode;
+                break;
             case LogIgnoreException ex:
                 switch (ex)
                 {
-                    case BadRequestException:
-                        var problemDetails = new ValidationProblemDetails()
-                        {
-                            Instance = context.HttpContext.Request.Path,
-                            Status = StatusCodes.Status400BadRequest,
-                            Detail = "Please refer to the errors property for additional details."
-                        };
-                        problemDetails.Errors.Add(
-                            "DomainValidations",
-                            new string[] { ex.Message ?? "Bad request." }
-                        );
-                        context.Result = new BadRequestObjectResult(problemDetails);
-                        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
                     case NotFoundException:
                         context.Result = new NotFoundObjectResult(json);
                         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
@@ -75,6 +75,7 @@ public class HttpGlobalExceptionFilterAttribute : ExceptionFilterAttribute
                 _logger.LogError(context.Exception.Message);
                 break;
         }
+        _logger.LogError(context.Exception.Message);
         context.ExceptionHandled = true;
     }
 }

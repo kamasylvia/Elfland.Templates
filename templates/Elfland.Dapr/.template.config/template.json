@@ -78,6 +78,38 @@
       "type": "computed",
       "value": "(db == \"sqlite\")"
     },
+    "logger": {
+      "type": "parameter",
+      "datatype": "choice",
+      "description": "Choose a log server.",
+      "defaultValue": "serilog",
+      "choices": [
+        {
+          "choice": "expressionless",
+          "description": "Expressionless"
+        },
+        {
+          "choice": "seq",
+          "description": "Seq"
+        },
+        {
+          "choice": "serilog",
+          "description": "Serilog"
+        }
+      ]
+    },
+    "expressionless": {
+      "type": "computed",
+      "value": "(logger) == \"expressionless\""
+    },
+    "seq": {
+      "type": "computed",
+      "value": "(logger) == \"seq\""
+    },
+    "serilog": {
+      "type": "computed",
+      "value": "(logger) == \"serilog\""
+    },
     "grpc": {
       "type": "parameter",
       "datatype": "choice",
