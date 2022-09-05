@@ -6,8 +6,7 @@ public class UpdateSheetCommandHandler : IRequestHandler<UpdateSheetCommand>
 {
     private readonly UnitOfWork _unitOfWork;
 
-    public UpdateSheetCommandHandler(UnitOfWork unitOfWork
-     )
+    public UpdateSheetCommandHandler(UnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }

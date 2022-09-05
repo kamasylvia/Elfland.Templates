@@ -6,9 +6,7 @@ public record class UpdateSpreadsheetCommandHandler : IRequestHandler<UpdateSpre
 {
     private readonly UnitOfWork _unitOfWork;
 
-    public UpdateSpreadsheetCommandHandler(
-        UnitOfWork unitOfWork
-    )
+    public UpdateSpreadsheetCommandHandler(UnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }

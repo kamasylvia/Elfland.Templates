@@ -21,7 +21,8 @@ public class UnitOfWork : UnitOfWorkPixie<ApplicationDbContext>
         ApplicationDbContext context
     ) : base(context)
     {
-        ActorProxyFactory = actorProxyFactory ?? throw new ArgumentNullException(nameof(actorProxyFactory));
+        ActorProxyFactory =
+            actorProxyFactory ?? throw new ArgumentNullException(nameof(actorProxyFactory));
 
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
