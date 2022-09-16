@@ -44,15 +44,15 @@ try
 
     // Add Actors
     builder.Services.AddActors(options =>
+    {
+        options.JsonSerializerOptions = new JsonSerializerOptions()
         {
-            options.JsonSerializerOptions = new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = true
-            };
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true
+        };
 
-            options.Actors.RegisterActor<SpreadsheetActor>();
-        });
+        options.Actors.RegisterActor<SpreadsheetActor>();
+    });
 
     // Add database
     builder.AddCustomDatabase();
@@ -75,9 +75,7 @@ try
     // Seed data
     try
     {
-        if (
-                        args.Where(s => s.Contains("seed") || s.Contains("init")).Count() > 0
-       )
+        if (args.Where(s => s.Contains("seed") || s.Contains("init")).Count() > 0)
         {
             await app.Services.InitializeDatabaseAsync();
         }
