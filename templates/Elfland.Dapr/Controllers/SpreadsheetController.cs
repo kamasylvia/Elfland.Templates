@@ -1,5 +1,4 @@
 using Elfland.Dapr.Application.Commands.SpreadsheetCommands;
-using Elfland.Dapr.Application.Events;
 using Elfland.Dapr.Application.Queries.SpreadsheetQueries;
 
 namespace Elfland.Dapr.Controllers;
@@ -8,7 +7,6 @@ namespace Elfland.Dapr.Controllers;
 [Route("[controller]")]
 public class SpreadsheetController : ControllerBase
 {
-    private const string DAPR_PUBSUB_NAME = "pubsub";
     private readonly IMediator _mediator;
 
     public SpreadsheetController(IMediator mediator)
@@ -26,22 +24,28 @@ public class SpreadsheetController : ControllerBase
         [FromQuery] GetSpreadsheetListQuery request
     ) => Ok(await _mediator.Send(request));
 
+    [HttpPost]
+    public async Task<IActionResult> AddSpreadsheetAsync([FromBody] AddSpreadsheetCommand request)
+    {
+        await _mediator.Send(request);
+        return NoContent();
+    }
+
     [HttpPut]
     public async Task<IActionResult> UpdateSpreadsheetAsync(
         [FromBody] UpdateSpreadsheetCommand request
     )
     {
         await _mediator.Send(request);
-        return Accepted();
+        return NoContent();
     }
 
-    [HttpPut("event")]
-    [Topic(DAPR_PUBSUB_NAME, nameof(UpdateSpreadsheetEvent))]
-    public async Task<IActionResult> UpdateSpreadsheetEventAsync(
-        [FromBody] UpdateSpreadsheetCommand request
+    [HttpDelete]
+    public async Task<IActionResult> DeleteSpreadsheetAsync(
+        [FromBody] DeleteSpreadsheetCommand request
     )
     {
         await _mediator.Send(request);
-        return Accepted();
+        return NoContent();
     }
 }

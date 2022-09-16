@@ -4,23 +4,26 @@ namespace Elfland.Dapr.Infrastructure;
 
 public class UnitOfWork : UnitOfWorkPixie<ApplicationDbContext>
 {
+    public const string DAPR_STORE_NAME = "statestore";
+    public DaprClient DaprClient { get; }
     public IActorProxyFactory ActorProxyFactory { get; }
     public IMapper Mapper { get; }
     public IMediator Mediator { get; }
     public IDomainEventBus DomainEventBus { get; }
-    public ISheetRepository TableRepository { get; }
     public ISpreadsheetRepository SpreadsheetRepository { get; }
 
     public UnitOfWork(
+        DaprClient daprClient,
         IActorProxyFactory actorProxyFactory,
         IMapper mapper,
         IMediator mediator,
         IDomainEventBus domainEventBus,
-        ISheetRepository tableRepository,
         ISpreadsheetRepository spreadsheetRepository,
         ApplicationDbContext context
     ) : base(context)
     {
+        DaprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));
+
         ActorProxyFactory =
             actorProxyFactory ?? throw new ArgumentNullException(nameof(actorProxyFactory));
 
@@ -29,9 +32,6 @@ public class UnitOfWork : UnitOfWorkPixie<ApplicationDbContext>
         Mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
         DomainEventBus = domainEventBus ?? throw new ArgumentNullException(nameof(domainEventBus));
-
-        TableRepository =
-            tableRepository ?? throw new ArgumentNullException(nameof(tableRepository));
 
         SpreadsheetRepository =
             spreadsheetRepository ?? throw new ArgumentNullException(nameof(spreadsheetRepository));

@@ -10,25 +10,25 @@
 		<PackageReference Include="Dapr.AspNetCore" Version="1.8.0" />
 		<PackageReference Include="Dapr.Extensions.Configuration" Version="1.8.0" />
 		<PackageReference Include="Elfland.Forest" Version="20220412.1.0" />
-		<PackageReference Include="Elfland.Lake" Version="20220819.1.0" />
+		<PackageReference Include="Elfland.Lake" Version="20220915.2.0" />
 		<PackageReference Include="Elfland.Ocean" Version="20220823.2.0" />
-		<PackageReference Include="Grpc.AspNetCore" Version="2.47.0" Condition="'$(disableGrpc)' == 'False'" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.48.0" Condition="'$(disableGrpc)' == 'False'" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
-		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.8" Condition="'$(sqlite)' == 'True'" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" Condition="'$(mssql)' == 'True'" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9" Condition="'$(sqlite)' == 'True'" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" Condition="'$(mssql)' == 'True'" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" Condition="'$(postgres)' == 'True'" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" Condition="'$(mysql)' == 'True'" />
 		<PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
 		<PackageReference Include="Serilog.Expressions" Version="3.4.0" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Serilog.Sinks.Exceptionless" Version="3.1.5" Condition="'$(exceptionless)' == 'True'" />
-		<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" Condition="'$(seq)' == 'True'" />
+		<PackageReference Include="Serilog.Sinks.Seq" Version="5.2.0" Condition="'$(seq)' == 'True'" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 		<PackageReference Include="System.Linq.Async.Queryable" Version="6.0.1" />
 	</ItemGroup>

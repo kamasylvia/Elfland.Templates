@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Dapr.Extensions.Configuration;
+using Elfland.Dapr.Application.Actors;
 using Elfland.Dapr.Data.Initializers;
 using Elfland.Dapr.Extensions.ProgramExtensions;
 using Elfland.Dapr.Infrastructure.Filters;
@@ -41,6 +42,18 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
+    // Add Actors
+    builder.Services.AddActors(options =>
+        {
+            options.JsonSerializerOptions = new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true
+            };
+
+            options.Actors.RegisterActor<SpreadsheetActor>();
+        });
+
     // Add database
     builder.AddCustomDatabase();
     // Add MediatR
@@ -51,8 +64,6 @@ try
     builder.Services.AddScoped<UnitOfWork>();
     // Add custom services
     builder.Services.AddApplicationServices();
-    // Add Actors
-    builder.Services.AddDaprActors();
 
 #if (grpcServer || grpcClientServer)
     // Add gRPC
@@ -65,9 +76,8 @@ try
     try
     {
         if (
-            args.Length == 1
-            && (args[0].ToLower().Contains("seed") || args[0].ToLower().Contains("init"))
-        )
+                        args.Where(s => s.Contains("seed") || s.Contains("init")).Count() > 0
+       )
         {
             await app.Services.InitializeDatabaseAsync();
         }

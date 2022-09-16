@@ -1,5 +1,4 @@
 ﻿using Elfland.Dapr.Domain.AggregatesModel.ApplicationAggregates;
-using Elfland.Dapr.Domain.AggregatesModel.TableAggregate;
 
 namespace Elfland.Dapr.Infrastructure;
 
@@ -7,7 +6,6 @@ public class ApplicationDbContext : DbContext
 {
     // Entity sets
     public virtual DbSet<Spreadsheet>? Spreadsheets { get; set; }
-    public virtual DbSet<Sheet>? Sheets { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

@@ -50,14 +50,15 @@ dapr run --app-id <project name> \
 ```
 #### Run
 ```sh
-dapr run --app-id <project name> \
-   --app-port <port> \
+dapr run --dapr-http-port 3500 \
+   --app-id <project name> \
    --components-path <components path> \
    -- dotnet run --project <project path>
 ```
 #### Watch run
 ```sh
-dapr run --app-id <project name> \
+dapr run --dapr-http-port 3500 \
+   --app-id <project name> \
    --app-port <port> \
    --components-path <components path> \
    -- dotnet watch run --project <project path> --no-hot-reload
