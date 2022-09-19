@@ -10,7 +10,7 @@
 		<PackageReference Include="Dapr.AspNetCore" Version="1.8.0" />
 		<PackageReference Include="Dapr.Extensions.Configuration" Version="1.8.0" />
 		<PackageReference Include="Elfland.Forest" Version="20220412.1.0" />
-		<PackageReference Include="Elfland.Lake" Version="20220915.2.0" />
+		<PackageReference Include="Elfland.Lake" Version="20220919.2.0" />
 		<PackageReference Include="Elfland.Ocean" Version="20220823.2.0" />
 		<PackageReference Include="Grpc.AspNetCore" Version="2.48.0" Condition="'$(disableGrpc)' == 'False'" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
@@ -22,7 +22,7 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9" Condition="'$(sqlite)' == 'True'" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" Condition="'$(mssql)' == 'True'" />
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" Condition="'$(postgres)' == 'True'" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" Condition="'$(postgres)' == 'True'" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" Condition="'$(mysql)' == 'True'" />
 		<PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
 		<PackageReference Include="Serilog.Expressions" Version="3.4.0" />
